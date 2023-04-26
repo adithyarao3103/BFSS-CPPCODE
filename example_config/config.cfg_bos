@@ -1,0 +1,16 @@
+[Machine]
+Threads=4
+
+[HMC]
+DTau=0.001
+NumSteps=100
+
+[Simulation]
+UpdateSteps=1000
+WarmUpSteps=1
+MeasureEach=1
+
+[Model]
+Temperature=0.5
+LatticeSize=8
+BosonMassSq=0.0
