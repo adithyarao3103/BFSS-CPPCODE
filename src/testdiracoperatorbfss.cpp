@@ -169,8 +169,10 @@ void testOutputComparison(){
   for(size_t i(0);i<numcolor;i++){
    state.config().phases()(i)=0.4*Real(i+1)*Real(i+1)-1.5;
   }
-  state.config()(0,0)(0,1)=0.1;
-  state.config()(0,0)(1,0)=0.1;
+//  state.config()(0,1)(0,1)=0.1;
+ // state.config()(0,1)(1,0)=0.1;
+  state.config()(0,8)(0,1)=1.1;
+  state.config()(0,8)(1,0)=1.1;
   for(size_t i(0);i<in.elementnum;i++){
     in(0,i)(0,0)=1.0+i;
     in(1,i)(1,0)=Complex(0.0,2.1);

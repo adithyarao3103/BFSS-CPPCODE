@@ -461,7 +461,7 @@ class BfssDiracOperator {
       const Complex prefact(parameters().prefactComm);
 #pragma omp parallel for
       for (size_t site = 0; site < conf().size(); site++) {
-        LoopMu<Config::elementnum - 2, Vector>::exec(site, in, out, prefact, conf(),dag);
+        LoopMu<Config::elementnum - 1, Vector>::exec(site, in, out, prefact, conf(),dag);
       }
     }
 
@@ -469,7 +469,7 @@ class BfssDiracOperator {
       const Complex prefact(pref*parameters().prefactComm);
 #pragma omp parallel for
       for (size_t site = 0; site < conf().size(); site++) {
-        LoopMu<Config::elementnum - 2, Vector>::addForce(site, out, X,Y, prefact, conf(),dag);
+        LoopMu<Config::elementnum - 1, Vector>::addForce(site, out, X,Y, prefact, conf(),dag);
       }
     }
 

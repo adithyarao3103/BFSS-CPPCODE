@@ -143,7 +143,7 @@ private:
      }
      if(parameter_.readstartconfig||parameter_.continueWithLast){
        readwriter_.initialize(state);
-       if(found){
+       if(found||parameter_.readstartconfig){
         readwriter_.readConfig(state);
        }
      }else{
