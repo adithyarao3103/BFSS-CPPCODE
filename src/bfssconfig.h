@@ -265,6 +265,30 @@ inline void setGaussianRandomVector(BfssDiracVector& in,RandomNumberGenerator& r
     }
 }
 
+
+inline void setU1RandomVector(BfssDiracVector& in,RandomNumberGenerator& rnd) {
+  for (size_t i = 0; i < in.size(); i++)
+    for (size_t e(BfssDiracVector::elementnum); e--;) {
+      std::vector<Real> randnum(2*numcolor*numcolor,0);
+      drawU1Random(randnum,rnd);
+      in(i, e).setZero();
+      size_t ind(0);
+      for (size_t n(0); n < numcolor; n++){
+        for (size_t m(0); m < numcolor; m++) {
+          const Real r1(randnum[ind++]);
+          const Real r2(randnum[ind++]);
+          const Complex v(r1,r2);
+          in(i,e)(n,m)=v;
+      }
+      }
+      const Complex tr1(in(i,e).trace()/Real(numcolor));
+      for (size_t n(0); n < numcolor; n++){
+      in(i,e)(n,n)-=tr1;
+      }
+    }
+}
+
+
 inline void projectTracelessVector(BfssDiracVector& in) {
 #pragma omp parallel for
   for (size_t i = 0; i < in.size(); i++)
@@ -349,6 +373,13 @@ inline void setFortranCodeAlpha(BfssConfiguration& in) {
   end do */
 }
 
+// inline void multiplyByConst(BfssConfiguration& inout, Real fact){
+//   for (size_t site=0; site< inout.size(); site++){
+//     for (size_t e(BfssConfiguration::elementnum); e--;){
+//       inout(site,e) = fact*inout(site,e);
+//     }
+//   }
+// }
 
 
 
@@ -480,5 +511,114 @@ for(size_t n(0);n<numcolor;n++){
 }
 return ret;
 }
+
+
+
+inline Real bfssBosonicEnergy(const BfssConfiguration& conf) {
+  Real coeff(-3.0/4.0);
+  Real commPart(0.0);
+  BfssConfiguration::MatrixType temp, comm;
+  #pragma omp parallel for
+    for(size_t site=0; site<conf.size(); site++){
+      for(size_t e(conf.elementnum); e--;){
+        for (size_t l(e); l--;) {
+          temp.noalias()=conf(site, e) * conf(site, l);
+          comm.noalias()=temp-temp.adjoint();
+          commPart += real((comm * comm).trace());
+        }
+      } 
+    }
+  return coeff*commPart/(Real(numcolor)*conf.size());
+}
+
+
+inline Real correlatorX2(const BfssConfiguration& conf, int dT){
+  int tPlusDt(0);
+  Real corr(0.0);
+  BfssConfiguration::MatrixType x2T, x2TPlusDT;
+  Complex tempX2T(0.0);
+  Complex tempX2TPlusDT(0.0);
+  // #pragma omp parallel for
+  for (size_t site=0; site<conf.size(); site++){
+    tempX2T = Complex(0.0, 0.0);
+    tempX2TPlusDT = Complex(0.0, 0.0);
+    tPlusDt = site + dT;
+    if (tPlusDt>=conf.size()){
+      tPlusDt -= conf.size();
+    }
+    for (size_t e(conf.elementnum); e--;){
+        x2T.noalias() = (conf(site, e) * conf(site, e));
+        x2TPlusDT.noalias() = (conf(tPlusDt, e) * conf(tPlusDt, e));
+        tempX2T+=x2T.trace();
+        tempX2TPlusDT+=x2TPlusDT.trace();
+    }
+    corr += real(tempX2T * tempX2TPlusDT);
+  }
+  return corr/(conf.size());
+}
+
+inline Real correlatorX2_Corrected(const BfssConfiguration& conf, int dT){
+  int tPlusDt(0);
+  Real corr(0.0);
+  Complex tempX2T(0.0);
+  Complex tempX2TPlusDT(0.0);
+  // #pragma omp parallel for
+  for (size_t site=0; site<conf.size(); site++){
+    tempX2T = Complex(0.0, 0.0);
+    tempX2TPlusDT = Complex(0.0, 0.0);
+    tPlusDt = site + dT;
+    if (tPlusDt>=conf.size()){
+      tPlusDt -= conf.size();
+    }
+    for (size_t e(conf.elementnum); e--;){
+        tempX2T= (conf(site, e) * conf(site, e)).trace();
+        tempX2TPlusDT = (conf(tPlusDt, e) * conf(tPlusDt, e)).trace();
+        corr += real(tempX2T * tempX2TPlusDT);
+    }
+  }
+  return corr/(conf.size());
+}
+
+inline Real corrT0(const BfssConfiguration& conf, int dT){
+  return real( (conf(0, 1)*conf(dT, 1)).trace() );
+}
+
+
+inline Real trX2(const BfssConfiguration& conf){
+  Real val(0.0);
+  for (size_t site=0; site<conf.size(); site++){
+    for (size_t e(conf.elementnum); e--;){
+        val += real( (conf(site, e) * conf(site, e)).trace());
+    }
+  }
+  return val/(conf.size());
+}
+
+inline Real test_corr(const BfssConfiguration& conf, int dT){
+  Real corr(0.0);
+  int tPlusDt(0);
+  for (size_t t=0; t<conf.size(); t++){
+    tPlusDt = t + dT;
+    if (tPlusDt>=conf.size()){
+      tPlusDt -= conf.size();
+    }
+    corr += real( ( ( conf(t, 0)*conf(t, 0) ).trace() )*( ( conf(tPlusDt, 0)*conf(tPlusDt, 0) ).trace() ) );
+  }
+  return corr/(conf.size());
+}
+
+inline Real singleMixedCorrelator(const BfssConfiguration& conf, int dT){
+  Real corr(0.0);
+  int tPlusDt(0);
+  for (size_t t=0; t<conf.size(); t++){
+    tPlusDt = t + dT;
+    if (tPlusDt>=conf.size()){
+      tPlusDt -= conf.size();
+    }
+    corr += real( ( ( conf(t, 0)*conf(t, 1) ).trace() )*( ( conf(tPlusDt, 0)*conf(tPlusDt, 1) ).trace() ) );
+  }
+  return corr/(conf.size());
+}
+
 
 #endif /* BFSSCONFIG_H_ */
