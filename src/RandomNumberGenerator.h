@@ -125,6 +125,23 @@ inline void drawGaussianRandom(std::vector<Real>& in, RandomNumberGenerator& rnd
   drawGaussianRandom(&in[0],in.size(),rnd);
 }
 
+inline void drawU1Random(Real* in,const size_t size, RandomNumberGenerator& rnd) {
+	for (size_t i(0); i < size; i += 2) {
+		// const Real pref(sqrt(fabs(-2.0 * log(1.0 - rnd()))));
+		const Real r(1.0 - rnd());
+		in[i] = sin(2 * pi * r);
+		if(i+1<size)
+		  in[i + 1] = cos(2 * pi * r);
+	}
+}
+
+inline void drawU1Random(std::vector<Real>& in, RandomNumberGenerator& rnd) {
+  if(in.size()==0)
+    return;
+  drawU1Random(&in[0],in.size(),rnd);
+}
+
+
 
 
 
