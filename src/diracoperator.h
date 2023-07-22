@@ -171,6 +171,74 @@ struct Gamma123 {
       return Gamma10D<0>::value(Gamma10D<1>::index(Gamma10D<2>::index(ind))) * Gamma10D<1>::value(Gamma10D<2>::index(ind)) * Gamma10D<2>::value(ind);
     }
 };
+ 
+struct Gamma11 {
+  static size_t index(const size_t ind){
+    switch (ind) {
+    case 0:
+        return 12;
+    case 1:
+        return 13;
+    case 2:
+        return 14;
+    case 3:
+        return 15;
+    case 4:
+        return 8;
+    case 5:
+        return 9;
+    case 6:
+        return 10;
+    case 7:
+        return 11;
+    case 8:
+        return 4;
+    case 9:
+        return 5;
+    case 10:
+        return 6;
+    case 11:
+        return 7;
+    case 12:
+        return 0;
+    case 13:
+        return 1;
+    case 14:
+        return 2;
+    case 15:
+        return 3;
+}
+
+  }
+  static Complex value(const size_t ind) {
+    return Complex(1.0, 0.0);
+  }
+};
+
+
+struct testGamma{
+  static size_t index(const size_t ind){
+    if (ind > 7){
+      return (ind - 8);
+    }
+    else {
+      return (ind + 8);
+    }
+  }
+
+  static Complex value(const size_t ind){
+    return Complex(1.0, 0.0);
+  }
+};
+
+struct chainedGamma11{
+  static size_t index(const size_t ind) {
+      return Gamma10D<0>::index(Gamma10D<1>::index(Gamma10D<2>::index(Gamma10D<3>::index(Gamma10D<4>::index(Gamma10D<5>::index(Gamma10D<6>::index(Gamma10D<7>::index(Gamma10D<8>::index(Gamma10D<9>::index(ind))))))))));
+    }
+    static Complex value(const size_t ind) {
+      return Gamma10D<0>::value(Gamma10D<1>::index(Gamma10D<2>::index(Gamma10D<3>::index(Gamma10D<4>::index(Gamma10D<5>::index(Gamma10D<6>::index(Gamma10D<7>::index(Gamma10D<8>::index(Gamma10D<9>::index(ind)))))))))) * Gamma10D<1>::value(Gamma10D<2>::index(Gamma10D<3>::index(Gamma10D<4>::index(Gamma10D<5>::index(Gamma10D<6>::index(Gamma10D<7>::index(Gamma10D<8>::index(Gamma10D<9>::index(ind))))))))) * Gamma10D<2>::value(Gamma10D<3>::index(Gamma10D<4>::index(Gamma10D<5>::index(Gamma10D<6>::index(Gamma10D<7>::index(Gamma10D<8>::index(Gamma10D<9>::index(ind)))))))) * Gamma10D<3>::value(Gamma10D<4>::index(Gamma10D<5>::index(Gamma10D<6>::index(Gamma10D<7>::index(Gamma10D<8>::index(Gamma10D<9>::index(ind))))))) * Gamma10D<4>::value(Gamma10D<5>::index(Gamma10D<6>::index(Gamma10D<7>::index(Gamma10D<8>::index(Gamma10D<9>::index(ind)))))) * Gamma10D<5>::value(Gamma10D<6>::index(Gamma10D<7>::index(Gamma10D<8>::index(Gamma10D<9>::index(ind))))) * Gamma10D<6>::value(Gamma10D<7>::index(Gamma10D<8>::index(Gamma10D<9>::index(ind)))) * Gamma10D<7>::value(Gamma10D<8>::index(Gamma10D<9>::index(ind))) * Gamma10D<8>::value(Gamma10D<9>::index(ind)) * Gamma10D<9>::value(ind);
+    }
+};
 
 class BfssDiracOperator {
   public:
