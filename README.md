@@ -24,25 +24,25 @@ Therefore the model is the quantum mechanics of $N\times N$ matrices $X$ and $\p
 <!-- $$\displaystyle S_{f}=i N\sum_{t}\mathrm{Tr}\bar{\psi}(t)\left(\begin{array}{c c}{{0}}&{{D_{+}}}\\ {{D_{-}}}&{{0}}\end{array}\right)\psi(t)-a N\sum_{t,M}\bar{\psi}(t)\gamma^{M}[X_{M}(t),\psi(t)] $$ -->
 
 ## Project
-The project was to grasp the essence of lattice field theory, build on the C++ implementation of the BFSS model by Dr. Bergner and write and analyze observables in the simulation. The specific observables written by me are:
+The objective of this project was to comprehend the fundamental principles of lattice field theory, extend the C++ implementation of the BFSS model developed by Dr. Bergner, and formulate and analyze observables within the simulation framework. The specific observables I implemented and investigated include:
 
 - Bosonic Energy: [bfssconfig.h  Line 517](/MCSC-CPPCODE/src/bfssconfig.h#L517)
 - Fermionic Energy: [fermionmeasurements.h Line 36](/MCSC-CPPCODE/src/fermionmeasurements.h#L36)
 - Gauge Invariant 4-point correlator (not normalised), $\int dt\left \langle ~\mathrm{Tr}(X^M(t)X^N(t)) ~ \mathrm{Tr}(X^M(t + \Delta t)X^N(t + \Delta t)) ~\right \rangle$: [bfssconfig.h Line 560](/MCSC-CPPCODE/src/bfssconfig.h#L560)
 
-Further, in order to verify the simulation data, and scrutinize possible errors, I have also written the codes for 
+To validate the simulation data and conduct a thorough examination of potential errors, I have developed supplementary code for
 
 - $\int dt \langle \mathrm{Tr}(X^0(t)X^0(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^0(t + \Delta t))\rangle$: [bfssconfig.h Line 597](/MCSC-CPPCODE/src/bfssconfig.h#L597).
 
 - $\int dt \langle \mathrm{Tr}(X^0(t)X^1(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^1(t + \Delta t))\rangle$: [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610).
 
-Further, I also verified the results for the correlators by writing the observables in the FORTRAN code for the same by Dr. Masanori Hanada.
+Additionally, to validate the results obtained for the correlators, I implemented the corresponding observables in the FORTRAN code developed by Dr. Masanori Hanada, which served as an independent verification of our findings.
 
 The complete code is in the folder [MCSC-CPPCODE](/MCSC-CPPCODE/).
 
 ## Results
 
-Unfortunately, I have lost access to the simulation data for Bosonic and Fermionic energies. Here I present the analysis for the Gauge Invariant 4-point correlator with only Bosonic action.
+Due to unforeseen circumstances, the simulation data for Bosonic and Fermionic energies are no longer available. In this section, we present an analysis of the Gauge Invariant 4-point correlator, focusing solely on the Bosonic sector.
 
 (The complete data and the jupyter notebooks of the analysis are in the folder [DATA_ANALYSIS](/DATA_ANALYSIS/))
 
@@ -56,17 +56,17 @@ Temperatures 0.10 - 0.18   |  Temperatures 0.20 - 0.28
 :-------------------------:|:-------------------------:
 ![](/DATA_ANALYSIS/CPP/DIFFTEMPS/temps_0.18-0.10.png)  |  ![](/DATA_ANALYSIS/CPP/DIFFTEMPS/temps_0.28-0.20.png)
 
-Note that the correlator is symmetric about $\Delta t = 32/2$ due to the periodic boundary conditions. Therefore we have truncated the graph to $\Delta t = 16$. Also the correlator is missing a normalization factor and an overall term to be subtracted from it. The above (and the forthcoming) graphs are only to observe the behavior of the correlator. 
+It is important to note that the correlator exhibits symmetry about $\Delta t = (\text{Number of lattice sites})/2$ due to the periodic boundary conditions imposed. Consequently, we have truncated the graphical representation to $\Delta t = 16$. Furthermore, it should be noted that the correlator lacks a normalization factor and an overall term that should be subtracted from it. The graphs presented here, as well as those that follow, are intended solely to illustrate the behavior of the correlator.
 
-Notice that as the temperature is decreased, the correlator deviates from the expected exponential decay. 
+Upon examination, it is evident that as the temperature decreases, the correlator's behavior deviates from the anticipated exponential decay.
 
-To verify this behavior, I wrote the correlator observable in the existing FORTRAN code at https://github.com/gbergner/SYM1DMMMT and compared the results. The results are in the folder [FORTRAN/DIFFTEMPS](/DATA_ANALYSIS/FORTRAN/DIFFTEMPS) and are as follows
+To validate this observed phenomenon, we implemented the correlator observable in the existing FORTRAN codebase, which can be found at https://github.com/gbergner/SYM1DMMMT. Subsequently, we conducted a comparative analysis of the results. The outcomes of this investigation are available in the directory [FORTRAN/DIFFTEMPS](/DATA_ANALYSIS/FORTRAN/DIFFTEMPS) and are presented as follows
 
 Temperatures 0.10 - 0.18   |  Temperatures 0.20 - 0.28
 :-------------------------:|:-------------------------:
 ![](/DATA_ANALYSIS/FORTRAN/DIFFTEMPS/temps_0.18-0.10.png)  |  ![](/DATA_ANALYSIS/FORTRAN/DIFFTEMPS/temps_0.28-0.20.png)
 
-We see that the correlator indeed displays the same behavior and the observed behavior is not an artifact of the C++ code. Therefore, to scrutinize the behavior, we conducted the following analysis in an attempt to pinpoint the source of the discrepancy.
+The correlator exhibits consistent behavior across implementations, indicating that the observed phenomenon is not an artifact of the C++ codebase. Therefore, to scrutinize the behavior, we conducted the following analysis in an attempt to pinpoint the source of the discrepancy.
 
 
 ### [3 Colors](/DATA_ANALYSIS/CPP/3COLORCORR/) and [6 Colors](/DATA_ANALYSIS/CPP/6COLORCORR/)
@@ -105,11 +105,13 @@ Turning off the commutator in the action gives the results as follows:
 
 ![](/DATA_ANALYSIS/CPP/NOCOMM/nocomm.png)
 
-We see that turning off the commutator term leads to the anomalous behavior turned off and the correlator displaying the expected exponential decay.
+We observe that turning off the commutator term results in the suppression of the anomalous behavior, with the correlator exhibiting the expected exponential decay.
 
 ### [Correlators With The Fermionic Terms in The Action](/DATA_ANALYSIS/FORTRAN/3COLORWITHFERMIONS/)
 
-To look at the behavior of the correlator under the complete action of the BFSS model, we run the same in the FORTRAN code (since at this stage, it is more efficient and fermionic simulations are exponentially more resource-consuming than bosonic simulations). The results are as follows:
+To investigate the behavior of the correlator under the complete action of the BFSS model, we employ the FORTRAN implementation of the code. This choice is motivated by the superior computational efficiency of the FORTRAN code as compared to the C++ code which is currently under development, particularly for fermionic simulations, which are significantly more resource-intensive compared to their bosonic counterparts.
+
+The results are as follows:
 
 [Temperature=0.10, Number of colors = 3, Number of lattice sites = 16]
 
@@ -117,11 +119,13 @@ To look at the behavior of the correlator under the complete action of the BFSS 
 
 ## Conclusions
 
-From the project, we observe that the 4-point gauge invariant correlator in the pure Bosonic sector of the BFSS model shows deviations from the expected exponential decay. The behavior is not an artifact of the C++ code, but rather the behavior of the model. 
+In our investigation of the BFSS model, we have observed that the 4-point gauge invariant correlator in the purely Bosonic sector exhibits deviations from the expected exponential decay. This phenomenon is not attributable to any artifacts in the C++ implementation but rather reflects an intrinsic property of the model itself.
 
-We have further observed that turning off the commutator (interaction) term in the action leads to the expected exponential decay. Therefore we conclude that in the pure Bosonic sector, the presence of the $X-X$ interaction term that is a result of the dimensional reduction is responsible for the anomalous behavior.
+Further analysis reveals that when the commutator (interaction) term in the action is nullified, the correlator reverts to the expected exponential decay behavior. This leads us to conclude that within the purely Bosonic sector, the presence of the X-X interaction term is responsible for the observed anomalous behavior.
 
-Further, in the complete action with the Fermionic terms, the correlator displays the expected exponential decay. The reason for the suppression of the anomalous behavior in the presence of the Fermionic terms is not clear.
+Interestingly, when considering the complete action inclusive of the Fermionic terms, the correlator demonstrates the expected exponential decay. However, the underlying mechanism by which the Fermionic terms suppress the anomalous behavior remains unclear and requires further investigation.
+
+Some similar studies indicate that such an oscillatory behavior is a sign of the model exhibiting confinement [[6](#L142)-[7](#L144)]. This translates to the statement that the glueballs in the Bosonic sector of the BFSS model are confined. However, such a statement here would require further theoretical and numerical verification to be stated concretely and can be only stated now as a speculation and not a conclusive statement.
 
 ## References
 
@@ -134,6 +138,11 @@ Further, in the complete action with the Fermionic terms, the correlator display
 [4] M. Hanada, “What lattice theorists can do for superstring/M-theory,” Int. J. Mod. Phys. A, vol. 31, no. 22, p. 1643006, Aug. 2016, doi: 10.1142/S0217751X16430065.
 
 [5] C. Gattringer and C. B. Lang, Quantum Chromodynamics on the Lattice: An Introductory Presentation, vol. 788. in Lecture Notes in Physics, vol. 788. Berlin, Heidelberg: Springer Berlin Heidelberg, 2010. doi: 10.1007/978-3-642-01850-3.
+
+[6] O. Oliveira, D. Dudal, and P. J. Silva, “Glueball spectral densities from the lattice,” Oct. 29, 2012, arXiv: arXiv:1210.7794. Accessed: Jul. 24, 2024. [Online]. Available: http://arxiv.org/abs/1210.7794
+
+[7] L. C. Loveridge, O. Oliveira, and P. J. Silva, “Schwinger function, confinement, and positivity violation in pure gauge QED,” Phys. Rev. D, vol. 106, no. 1, p. L011502, Jul. 2022, doi: 10.1103/PhysRevD.106.L011502.
+
 
 ## Appendix
 
