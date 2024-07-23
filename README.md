@@ -141,9 +141,11 @@ Some similar studies indicate that such an oscillatory behavior is a sign of the
 [5] C. Gattringer and C. B. Lang, Quantum Chromodynamics on the Lattice: An Introductory Presentation, vol. 788. in Lecture Notes in Physics, vol. 788. Berlin, Heidelberg: Springer Berlin Heidelberg, 2010. doi: 10.1007/978-3-642-01850-3.
 
 <a id="ref6"></a>
+
 [6] O. Oliveira, D. Dudal, and P. J. Silva, “Glueball spectral densities from the lattice,” Oct. 29, 2012, arXiv: arXiv:1210.7794. Accessed: Jul. 24, 2024. [Online]. Available: http://arxiv.org/abs/1210.7794
 
 <a id="ref7"></a>
+
 [7] L. C. Loveridge, O. Oliveira, and P. J. Silva, “Schwinger function, confinement, and positivity violation in pure gauge QED,” Phys. Rev. D, vol. 106, no. 1, p. L011502, Jul. 2022, doi: 10.1103/PhysRevD.106.L011502.
 
 
