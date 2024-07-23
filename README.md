@@ -7,4 +7,6 @@ $$ S_{M}={N}\int_{0}^{\beta}dt~\mathrm{Tr}\left\lbrace\frac{1}{2}\big(D_{t}X_{M}
 
 where $\gamma^M~(M=1, \cdots, 10)$ are the $16\times16$ upper right block matrices of the 10-d Gamma matrices $\Gamma^M$.
 
+Therefore the model is the quantum mechanics of $N\times N$ matrices (where $N$ is the number of colors).
+
 
