@@ -28,8 +28,29 @@ The project was to grasp the essence of lattice field theory, build on the C++ i
 
 - Bosonic Energy: [bfssconfig.h  Line 517](/MCSC-CPPCODE/src/bfssconfig.h#L517)
 - Fermionic Energy: [fermionmeasurements.h Line 36](/MCSC-CPPCODE/src/fermionmeasurements.h#L36)
-- Gauge Invariant 4-point correlator (not normalised), $\left \langle ~\mathrm{Tr}(X(t_1)X(t_1)) ~ \mathrm{Tr}(X(t_2)X(t_2)) ~\right \rangle$: [bfssconfig.h Line 560](/MCSC-CPPCODE/src/bfssconfig.h#L560)
+- Gauge Invariant 4-point correlator (not normalised), $\int dt\left \langle ~\mathrm{Tr}(X(t)X(t)) ~ \mathrm{Tr}(X(t + \Delta t)X(t + \Delta t)) ~\right \rangle$: [bfssconfig.h Line 560](/MCSC-CPPCODE/src/bfssconfig.h#L560)
 
 ## The Data
 
-Unfortunately, I have lost access the the simulation data for Bosonic and Fermionic energies. Here I present the simulation data for the Gauge Invariant 4-point correlator. 
+Unfortunately, I have lost access to the simulation data for Bosonic and Fermionic energies. Here I present the analysis for the Gauge Invariant 4-point correlator.
+
+(The complete data and the jupyter notebooks of the analysis are in the folder DATA_ANALYSIS)
+
+### [DIFFTEMPS](/DATA_ANALYSIS/CPP/DIFFTEMPS/)
+
+Correlators vs $\Delta t$ for different temperatures, number of lattice sites = 32
+
+Temperatures 0.10 - 0.18   |  Temperatures 0.20 - 0.28
+:-------------------------:|:-------------------------:
+![](/DATA_ANALYSIS/CPP/DIFFTEMPS/temps_0.18-0.10.png)  |  ![](/DATA_ANALYSIS/CPP/DIFFTEMPS/temps_0.28-0.20.png)
+
+Note that the correlator is symmetric about $\Delta t = 32/2$ due to the periodic boundary conditions. Therefore we have truncated the graph to $\Delta t = 16$. Also the correlator is missing a normalization factor and an overall term to be subtracted from it. The above (and the forthcoming) graphs are only to observe the behavior of the correlator. 
+
+Notice that as the temperature is decreased, the correlator deviates from the expected exponential decay. To verify this behavior, we conducted a few test runs, which are presented here. 
+
+### [SINGLEMIXED](/DATA_ANALYSIS/CPP/SINGLEMIXED/)
+
+Rather than summing over all $X^M$, we consider only two $X^0$ and $X^1$. The corresponding code is at [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610).
+
+The graph obtained is 
+![](/DATA_ANALYSIS/CPP/SINGLEMIXED/singlemixed.png)
