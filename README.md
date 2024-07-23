@@ -23,12 +23,19 @@ Therefore the model is the quantum mechanics of $N\times N$ matrices $X$ and $\p
 
 <!-- $$\displaystyle S_{f}=i N\sum_{t}\mathrm{Tr}\bar{\psi}(t)\left(\begin{array}{c c}{{0}}&{{D_{+}}}\\ {{D_{-}}}&{{0}}\end{array}\right)\psi(t)-a N\sum_{t,M}\bar{\psi}(t)\gamma^{M}[X_{M}(t),\psi(t)] $$ -->
 
-## The Code
+## Code
 The project was to grasp the essence of lattice field theory, build on the C++ implementation of the BFSS model by Dr. Bergner and write and analyze observables in the simulation. The specific observables written by me are:
 
 - Bosonic Energy: [bfssconfig.h  Line 517](/MCSC-CPPCODE/src/bfssconfig.h#L517)
 - Fermionic Energy: [fermionmeasurements.h Line 36](/MCSC-CPPCODE/src/fermionmeasurements.h#L36)
 - Gauge Invariant 4-point correlator (not normalised), $\int dt\left \langle ~\mathrm{Tr}(X^M(t)X^N(t)) ~ \mathrm{Tr}(X^M(t + \Delta t)X^N(t + \Delta t)) ~\right \rangle$: [bfssconfig.h Line 560](/MCSC-CPPCODE/src/bfssconfig.h#L560)
+
+Further, in order to verify the simulation data, and scrutinize possible errors, I have also written the codes for 
+
+- $\int dt ~\langle~\mathrm{Tr}(X^0(t)X^0(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^0(t + \Delta t))\rangle$ : [bfssconfig.h Line 597](/MCSC-CPPCODE/src/bfssconfig.h#L597).
+- $\int dt ~\langle~\mathrm{Tr}(X^0(t)X^1(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^1(t + \Delta t))\rangle$ : [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610).
+
+Further, I also verified the results for the correlators by writing the observables in the FORTRAN code for the same by Dr. Masanori Hanada.
 
 The complete code is in the folder [MCSC-CPPCODE](/MCSC-CPPCODE/).
 
@@ -96,7 +103,7 @@ To look at the behavior of the correlator under the complete action of the BFSS 
 
 ![](/DATA_ANALYSIS/FORTRAN/3COLORWITHFERMIONS/fullAction.png)
 
-## The Conclusions
+## Conclusions
 
 From the project, we observe that the 4-point gauge invariant correlator in the pure Bosonic sector of the BFSS model shows deviations from the expected exponential decay. The behavior is not an artifact of the C++ code, but rather the behavior of the model. 
 
