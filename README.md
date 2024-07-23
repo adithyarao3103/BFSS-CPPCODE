@@ -1,4 +1,4 @@
-# BFSS Model on the Lattice
+# BFSS Model on the Lattice - Report
 
 ## The Model
 
