@@ -12,8 +12,13 @@ where $\gamma^M~(M=1, \cdots, 10)$ are the $16\times16$ upper right block matric
 Therefore the model is the quantum mechanics of $N\times N$ matrices $X$ and $\psi$ (where $N$ is the number of colors).
 
 On lattice regularization, the model action becomes 
+
 $$ S_M = S_b + S_f $$
+
 with
+
 $$ S_{b}\ =\ \frac{N}{2a}\sum_{t.M}\mathrm{Tr}\left(U X_{M}(t+a)U^{\dagger}-X_{M}(t)\right)^{2}-\frac{N a}{4}\sum_{t.M.N}\mathrm{Tr}[X_{M}(t),X_{N}(t)]^{2} $$
+
 $$S_{f}=i N\sum_{t}\mathrm{Tr}\bar{\psi}(t)\left(\begin{array}{c c}{{0}}&{{D_{+}}}\\ {{D_{-}}}&{{0}}\end{array}\right)\psi(t)-a N\sum_{t,M}\bar{\psi}(t)\gamma^{M}[X_{M}(t),\psi(t)], $$
+
 ## The Project
