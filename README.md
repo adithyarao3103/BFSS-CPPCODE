@@ -34,11 +34,11 @@ The complete code is in the folder [MCSC-CPPCODE](/MCSC-CPPCODE/).
 
 ## The Data
 
-Unfortunately, I have lost access to the simulation data for Bosonic and Fermionic energies. Here I present the analysis for the Gauge Invariant 4-point correlator.
+Unfortunately, I have lost access to the simulation data for Bosonic and Fermionic energies. Here I present the analysis for the Gauge Invariant 4-point correlator with only Bosonic action.
 
 (The complete data and the jupyter notebooks of the analysis are in the folder [DATA_ANALYSIS](/DATA_ANALYSIS/))
 
-### [DIFFTEMPS](/DATA_ANALYSIS/CPP/DIFFTEMPS/)
+### [Correlators at Different Temperatures](/DATA_ANALYSIS/CPP/DIFFTEMPS/)
 
 Correlators vs $\Delta t$ for different temperatures, number of lattice sites = 32 and number of colors = 9,
 
@@ -48,7 +48,16 @@ Temperatures 0.10 - 0.18   |  Temperatures 0.20 - 0.28
 
 Note that the correlator is symmetric about $\Delta t = 32/2$ due to the periodic boundary conditions. Therefore we have truncated the graph to $\Delta t = 16$. Also the correlator is missing a normalization factor and an overall term to be subtracted from it. The above (and the forthcoming) graphs are only to observe the behavior of the correlator. 
 
-Notice that as the temperature is decreased, the correlator deviates from the expected exponential decay. To verify this behavior, we conducted a few test runs, which are presented here. 
+Notice that as the temperature is decreased, the correlator deviates from the expected exponential decay. 
+
+To verify this behavior, I wrote the correlator observable in the existing FORTRAN code at https://github.com/gbergner/SYM1DMMMT and compared the results. The results are in the folder [FORTRAN/DIFFTEMPS](/DATA_ANALYSIS/FORTRAN/DIFFTEMPS) and are as follows
+
+Temperatures 0.10 - 0.18   |  Temperatures 0.20 - 0.28
+:-------------------------:|:-------------------------:
+![](/DATA_ANALYSIS/FORTRAN/DIFFTEMPS/temps_0.18-0.10.png)  |  ![](/DATA_ANALYSIS/FORTRAN/DIFFTEMPS/temps_0.28-0.20.png)
+
+We see that the correlator indeed displays the same behavior and the observed behavior is not an artifact of the C++ code. Therefore, to scrutinize the behavior, we conducted the following analysis in an attempt to pinpoint the source of the discrepancy.
+
 
 ### [3 Colors](/DATA_ANALYSIS/CPP/3COLORCORR/) and [6 Colors](/DATA_ANALYSIS/CPP/6COLORCORR/)
 
@@ -61,7 +70,7 @@ The data obtained for the lattice size of 16 is:
 ![](/DATA_ANALYSIS/CPP/3COLORCORR/3colorcorr.png)  |  ![](/DATA_ANALYSIS/CPP/6COLORCORR/6colorcorr.png)
 
 
-### [SINGLE](/DATA_ANALYSIS/CPP/SINGLE) and [SINGLEMIXED](/DATA_ANALYSIS/CPP/SINGLEMIXED/)
+### [Single Matrix Correlator](/DATA_ANALYSIS/CPP/SINGLE) and [Single Mixed Matrix Correlator](/DATA_ANALYSIS/CPP/SINGLEMIXED/)
 
 Rather than summing over all $X^M$, we consider two cases, considering only $X^0$, and the other case only the mix term between $X^0$ and $X^1$. The corresponding observables are at [bfssconfig.h Line 597](/MCSC-CPPCODE/src/bfssconfig.h#L597) [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610).
 
@@ -72,3 +81,25 @@ Single   |  Mixed
 ![](/DATA_ANALYSIS/CPP/SINGLE/single.png)  |  ![](/DATA_ANALYSIS/CPP/SINGLEMIXED/singlemixed.png)
 
 
+### [No Commutator in the Action](/DATA_ANALYSIS/CPP/NOCOMM)
+
+We further investigate the case of turning off the commutator term in the action. 
+
+Turning off the commutator in the action gives the results as follows: (T=0.10, 9 colors and 16 lattice sites)
+![](/DATA_ANALYSIS/CPP/NOCOMM/nocomm.png)
+
+We see that turning off the commutator term leads to the anomalous behavior turned off and the correlator displaying the expected exponential decay.
+
+### [Correlators With The Fermionic Terms in The Action](/DATA_ANALYSIS/FORTRAN/3COLORWITHFERMIONS/)
+
+To look at the behavior of the correlator under the complete action of the BFSS model, we run the same in the FORTRAN code (since at this stage, it is more efficient and fermionic simulations are exponentially more resource-consuming than bosonic simulations) with 3 colors and 16 lattice sites for T=0.1. The results are as follows:
+
+![](/DATA_ANALYSIS/FORTRAN/3COLORWITHFERMIONS/fullAction.png)
+
+## The Conclusions
+
+From the project, we observe that the 4-point gauge invariant correlator in the pure Bosonic sector of the BFSS model shows deviations from the expected exponential decay. The behavior is not an artifact of the C++ code, but rather the behavior of the model. 
+
+We have further observed that turning off the commutator (interaction) term in the action leads to the expected exponential decay. Therefore we conclude that in the pure Bosonic sector, the presence of the $X-X$ interaction term that is a result of the dimensional reduction is responsible for the anomalous behavior.
+
+Further, in the complete action with the Fermionic terms, the correlator displays the expected exponential decay. The reason for the suppression of the anomalous behavior in the presence of the Fermionic terms is not clear.
