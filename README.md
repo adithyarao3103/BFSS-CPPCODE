@@ -23,7 +23,7 @@ Therefore the model is the quantum mechanics of $N\times N$ matrices $X$ and $\p
 
 <!-- $$\displaystyle S_{f}=i N\sum_{t}\mathrm{Tr}\bar{\psi}(t)\left(\begin{array}{c c}{{0}}&{{D_{+}}}\\ {{D_{-}}}&{{0}}\end{array}\right)\psi(t)-a N\sum_{t,M}\bar{\psi}(t)\gamma^{M}[X_{M}(t),\psi(t)] $$ -->
 
-## Code
+## Project
 The project was to grasp the essence of lattice field theory, build on the C++ implementation of the BFSS model by Dr. Bergner and write and analyze observables in the simulation. The specific observables written by me are:
 
 - Bosonic Energy: [bfssconfig.h  Line 517](/MCSC-CPPCODE/src/bfssconfig.h#L517)
@@ -40,7 +40,7 @@ Further, I also verified the results for the correlators by writing the observab
 
 The complete code is in the folder [MCSC-CPPCODE](/MCSC-CPPCODE/).
 
-## The Data
+## Results
 
 Unfortunately, I have lost access to the simulation data for Bosonic and Fermionic energies. Here I present the analysis for the Gauge Invariant 4-point correlator with only Bosonic action.
 
