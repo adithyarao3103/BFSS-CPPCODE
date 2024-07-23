@@ -17,7 +17,9 @@ $$ S_M = S_b + S_f $$
 
 with
 
-<img src="https://latex.codecogs.com/svg.latex?S_{b}\ =\displaystyle \frac{N}{2a}\sum_{t.M}\mathrm{Tr}\left(U X_{M}(t+a)U^{\dagger}-X_{M}(t)\right)^{2}-\frac{N a}{4}\sum_{t.M.N}\mathrm{Tr}[X_{M}(t),X_{N}(t)]^{2}">
+<!-- $$ S_{b}\ =\displaystyle \frac{N}{2a}\sum_{t.M}\mathrm{Tr}\left(U X_{M}(t+a)U^{\dagger}-X_{M}(t)\right)^{2}-\frac{N a}{4}\sum_{t.M.N}\mathrm{Tr}[X_{M}(t),X_{N}(t)]^{2} $$ -->
+
+![equation](https://latex.codecogs.com/svg.image?&space;S_{b}\=\displaystyle\frac{N}{2a}\sum_{t.M}\mathrm{Tr}\left(U&space;X_{M}(t&plus;a)U^{\dagger}-X_{M}(t)\right)^{2}-\frac{N&space;a}{4}\sum_{t.M.N}\mathrm{Tr}[X_{M}(t),X_{N}(t)]^{2})
 
 $$\displaystyle S_{f}=i N\sum_{t}\mathrm{Tr}\bar{\psi}(t)\left(\begin{array}{c c}{{0}}&{{D_{+}}}\\ {{D_{-}}}&{{0}}\end{array}\right)\psi(t)-a N\sum_{t,M}\bar{\psi}(t)\gamma^{M}[X_{M}(t),\psi(t)] $$
 
