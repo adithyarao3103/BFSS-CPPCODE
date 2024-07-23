@@ -126,7 +126,7 @@ Further analysis reveals that when the commutator (interaction) term in the acti
 
 Interestingly, when considering the complete action inclusive of the Fermionic terms, the correlator demonstrates the expected exponential decay. However, the underlying mechanism by which the Fermionic terms suppress the anomalous behavior remains unclear and requires further investigation.
 
-Some similar studies indicate that such an oscillatory behavior is a sign of the model exhibiting confinement [[6](#L142)-[7](#L144)]. This translates to the statement that the glueballs in the Bosonic sector of the BFSS model are confined. However, such a statement here would require further theoretical and numerical verification to be stated concretely and can be only stated now as a speculation and not a conclusive statement.
+Some similar studies indicate that such an oscillatory behavior is a sign of the model exhibiting confinement [[6](#ref6)-[7](#ref7)]. This translates to the statement that the glueballs in the Bosonic sector of the BFSS model are confined. However, such a statement here would require further theoretical and numerical verification to be stated concretely and can be only stated now as a speculation and not a conclusive statement.
 
 ## References
 
@@ -140,8 +140,10 @@ Some similar studies indicate that such an oscillatory behavior is a sign of the
 
 [5] C. Gattringer and C. B. Lang, Quantum Chromodynamics on the Lattice: An Introductory Presentation, vol. 788. in Lecture Notes in Physics, vol. 788. Berlin, Heidelberg: Springer Berlin Heidelberg, 2010. doi: 10.1007/978-3-642-01850-3.
 
+<a id="ref6"></a>
 [6] O. Oliveira, D. Dudal, and P. J. Silva, “Glueball spectral densities from the lattice,” Oct. 29, 2012, arXiv: arXiv:1210.7794. Accessed: Jul. 24, 2024. [Online]. Available: http://arxiv.org/abs/1210.7794
 
+<a id="ref7"></a>
 [7] L. C. Loveridge, O. Oliveira, and P. J. Silva, “Schwinger function, confinement, and positivity violation in pure gauge QED,” Phys. Rev. D, vol. 106, no. 1, p. L011502, Jul. 2022, doi: 10.1103/PhysRevD.106.L011502.
 
 
