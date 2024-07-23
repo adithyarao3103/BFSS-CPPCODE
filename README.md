@@ -28,17 +28,19 @@ The project was to grasp the essence of lattice field theory, build on the C++ i
 
 - Bosonic Energy: [bfssconfig.h  Line 517](/MCSC-CPPCODE/src/bfssconfig.h#L517)
 - Fermionic Energy: [fermionmeasurements.h Line 36](/MCSC-CPPCODE/src/fermionmeasurements.h#L36)
-- Gauge Invariant 4-point correlator (not normalised), $\int dt\left \langle ~\mathrm{Tr}(X(t)X(t)) ~ \mathrm{Tr}(X(t + \Delta t)X(t + \Delta t)) ~\right \rangle$: [bfssconfig.h Line 560](/MCSC-CPPCODE/src/bfssconfig.h#L560)
+- Gauge Invariant 4-point correlator (not normalised), $\int dt\left \langle ~\mathrm{Tr}(X^M(t)X^N(t)) ~ \mathrm{Tr}(X^M(t + \Delta t)X^N(t + \Delta t)) ~\right \rangle$: [bfssconfig.h Line 560](/MCSC-CPPCODE/src/bfssconfig.h#L560)
+
+The complete code is in the folder [MCSC-CPPCODE](/MCSC-CPPCODE/).
 
 ## The Data
 
 Unfortunately, I have lost access to the simulation data for Bosonic and Fermionic energies. Here I present the analysis for the Gauge Invariant 4-point correlator.
 
-(The complete data and the jupyter notebooks of the analysis are in the folder DATA_ANALYSIS)
+(The complete data and the jupyter notebooks of the analysis are in the folder [DATA_ANALYSIS](/DATA_ANALYSIS/))
 
 ### [DIFFTEMPS](/DATA_ANALYSIS/CPP/DIFFTEMPS/)
 
-Correlators vs $\Delta t$ for different temperatures, number of lattice sites = 32
+Correlators vs $\Delta t$ for different temperatures, number of lattice sites = 32 and number of colors = 9,
 
 Temperatures 0.10 - 0.18   |  Temperatures 0.20 - 0.28
 :-------------------------:|:-------------------------:
@@ -48,9 +50,25 @@ Note that the correlator is symmetric about $\Delta t = 32/2$ due to the periodi
 
 Notice that as the temperature is decreased, the correlator deviates from the expected exponential decay. To verify this behavior, we conducted a few test runs, which are presented here. 
 
-### [SINGLEMIXED](/DATA_ANALYSIS/CPP/SINGLEMIXED/)
+### [3 Colors](/DATA_ANALYSIS/CPP/3COLORCORR/) and [6 Colors](/DATA_ANALYSIS/CPP/6COLORCORR/)
 
-Rather than summing over all $X^M$, we consider only two $X^0$ and $X^1$. The corresponding code is at [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610).
+To verify that the same effect persists for a lower number of colors too, we considered the case of 6 and 3 colors for temperature 0.10. 
 
-The graph obtained is 
-![](/DATA_ANALYSIS/CPP/SINGLEMIXED/singlemixed.png)
+The data obtained for the lattice size of 16 is:
+
+3 Colors   |  6 Colors
+:-------------------------:|:-------------------------:
+![](/DATA_ANALYSIS/CPP/3COLORCORR/3colorcorr.png)  |  ![](/DATA_ANALYSIS/CPP/6COLORCORR/6colorcorr.png)
+
+
+### [SINGLE](/DATA_ANALYSIS/CPP/SINGLE) and [SINGLEMIXED](/DATA_ANALYSIS/CPP/SINGLEMIXED/)
+
+Rather than summing over all $X^M$, we consider two cases, considering only $X^0$, and the other case only the mix term between $X^0$ and $X^1$. The corresponding observables are at [bfssconfig.h Line 597](/MCSC-CPPCODE/src/bfssconfig.h#L597) [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610).
+
+The graph obtained (for lattice size of 16 and number of colors 9) is:
+
+Single   |  Mixed
+:-------------------------:|:-------------------------:
+![](/DATA_ANALYSIS/CPP/SINGLE/single.png)  |  ![](/DATA_ANALYSIS/CPP/SINGLEMIXED/singlemixed.png)
+
+

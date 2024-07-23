@@ -594,7 +594,7 @@ inline Real trX2(const BfssConfiguration& conf){
   return val/(conf.size());
 }
 
-inline Real test_corr(const BfssConfiguration& conf, int dT){
+inline Real singleCorrelator(const BfssConfiguration& conf, int dT){
   Real corr(0.0);
   int tPlusDt(0);
   for (size_t t=0; t<conf.size(); t++){
