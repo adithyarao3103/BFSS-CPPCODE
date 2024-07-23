@@ -11,17 +11,23 @@ where $\gamma^M~(M=1, \cdots, 10)$ are the $16\times16$ upper right block matric
 
 Therefore the model is the quantum mechanics of $N\times N$ matrices $X$ and $\psi$ (where $N$ is the number of colors).
 
-On lattice regularization, the model action becomes 
+<!-- On lattice regularization, the model action becomes  -->
 
-$$ S_M = S_b + S_f $$
+<!-- $$ S_M = S_b + S_f $$ -->
 
-with
+<!-- with -->
 
 <!-- $$ S_{b}\ =\displaystyle \frac{N}{2a}\sum_{t.M}\mathrm{Tr}\left(U X_{M}(t+a)U^{\dagger}-X_{M}(t)\right)^{2}-\frac{N a}{4}\sum_{t.M.N}\mathrm{Tr}[X_{M}(t),X_{N}(t)]^{2} $$ -->
 
-![equation](https://latex.codecogs.com/svg.image?&space;S_{b}\=\displaystyle\frac{N}{2a}\sum_{t.M}\mathrm{Tr}\left(U&space;X_{M}(t&plus;a)U^{\dagger}-X_{M}(t)\right)^{2}-\frac{N&space;a}{4}\sum_{t.M.N}\mathrm{Tr}[X_{M}(t),X_{N}(t)]^{2})
+<!-- ![equation](https://latex.codecogs.com/svg.image?&space;S_{b}\=\displaystyle\frac{N}{2a}\sum_{t.M}\mathrm{Tr}\left(U&space;X_{M}(t&plus;a)U^{\dagger}-X_{M}(t)\right)^{2}-\frac{N&space;a}{4}\sum_{t.M.N}\mathrm{Tr}[X_{M}(t),X_{N}(t)]^{2}) -->
 
-$$\displaystyle S_{f}=i N\sum_{t}\mathrm{Tr}\bar{\psi}(t)\left(\begin{array}{c c}{{0}}&{{D_{+}}}\\ {{D_{-}}}&{{0}}\end{array}\right)\psi(t)-a N\sum_{t,M}\bar{\psi}(t)\gamma^{M}[X_{M}(t),\psi(t)] $$
-
+<!-- $$\displaystyle S_{f}=i N\sum_{t}\mathrm{Tr}\bar{\psi}(t)\left(\begin{array}{c c}{{0}}&{{D_{+}}}\\ {{D_{-}}}&{{0}}\end{array}\right)\psi(t)-a N\sum_{t,M}\bar{\psi}(t)\gamma^{M}[X_{M}(t),\psi(t)] $$ -->
 
 ## The Project
+The project was to grasp the essence of lattice field theory, build on the C++ implementation of the BFSS model by Dr. Bergner and write and analyze observables in the simulation. The specific observables written by me are:
+
+- Bosonic Energy: [bfssconfig.h](/MCSC-CPPCODE/src/bfssconfig.h) Line 517
+- Fermionic Energy: [fermionmeasurements.h](/MCSC-CPPCODE/src/fermionmeasurements.h) Line 36
+- Gauge Invariant 4-point correlator (not normalised), $\langle X(t_1)X(t_1)X(t_2)X(t_2) \rangle$: [bfssconfig.h](/MCSC-CPPCODE/src/bfssconfig.h) Line 560
+
+
