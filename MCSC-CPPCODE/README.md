@@ -1,10 +1,13 @@
 # MCSC-CPPCODE
 
-Base code for MCSC-CPPCODE by Dr. habil. Georg Bergner, Theoretical Physics Institute, Friedrich Schiller University, Jena.
+Code for simulating the BFSS model on lattice by Dr. habil. Georg Bergner, Theoretical Physics Institute, Friedrich Schiller University, Jena.
+
+Language - C++
 
 Cloned from https://git.tpi.uni-jena.de/mcsc/mcsc-cppcode.git
 
-The description of the model and the code flow (for the original FORTRAN version by Dr. Masanori Hanada) is given in the [PDF file](/MCSC-CPPCODE/Hanada%20-%20BFSS%20code%20manual.pdf)
+The description of the model and the code flow (for the original FORTRAN version by Dr. Masanori Hanada) is in the [PDF file](/MCSC-CPPCODE/Hanada%20-%20BFSS%20code%20manual.pdf)
+
 
 
 <!-- # MCSC-CPPCODE
