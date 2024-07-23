@@ -28,7 +28,8 @@ The project was to grasp the essence of lattice field theory, build on the C++ i
 
 - Bosonic Energy: [bfssconfig.h  Line 517](/MCSC-CPPCODE/src/bfssconfig.h#L517)
 - Fermionic Energy: [fermionmeasurements.h Line 36](/MCSC-CPPCODE/src/fermionmeasurements.h#L36)
-- Gauge Invariant 4-point correlator (not normalised), $\langle X(t_1)X(t_1)X(t_2)X(t_2) \rangle$: [bfssconfig.h Line 560](/MCSC-CPPCODE/src/bfssconfig.h#L560)
+- Gauge Invariant 4-point correlator (not normalised), $\left \langle ~\mathrm{Tr}(X(t_1)X(t_1)) ~ \mathrm{Tr}(X(t_2)X(t_2)) ~\right \rangle$: [bfssconfig.h Line 560](/MCSC-CPPCODE/src/bfssconfig.h#L560)
 
 ## The Data
 
+Unfortunately, I have lost access the the simulation data for Bosonic and Fermionic energies. Here I present the simulation data for the Gauge Invariant 4-point correlator. 
