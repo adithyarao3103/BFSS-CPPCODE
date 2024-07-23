@@ -122,3 +122,62 @@ From the project, we observe that the 4-point gauge invariant correlator in the 
 We have further observed that turning off the commutator (interaction) term in the action leads to the expected exponential decay. Therefore we conclude that in the pure Bosonic sector, the presence of the $X-X$ interaction term that is a result of the dimensional reduction is responsible for the anomalous behavior.
 
 Further, in the complete action with the Fermionic terms, the correlator displays the expected exponential decay. The reason for the suppression of the anomalous behavior in the presence of the Fermionic terms is not clear.
+
+## References
+
+[1] M. Hanada, “BFSS code manual.” 
+
+[2] V. G. Filev and D. O’Connor, “The BFSS model on the lattice,” J. High Energ. Phys., vol. 2016, no. 5, p. 167, May 2016, doi: 10.1007/JHEP05(2016)167.
+
+[3] M. Hanada, J. Nishimura, Y. Sekino, and T. Yoneya, “Direct test of the gauge-gravity correspondence for Matrix theory correlation functions,” J. High Energ. Phys., vol. 2011, no. 12, p. 20, Dec. 2011, doi: 10.1007/JHEP12(2011)020.
+
+[4] M. Hanada, “What lattice theorists can do for superstring/M-theory,” Int. J. Mod. Phys. A, vol. 31, no. 22, p. 1643006, Aug. 2016, doi: 10.1142/S0217751X16430065.
+
+[5] C. Gattringer and C. B. Lang, Quantum Chromodynamics on the Lattice: An Introductory Presentation, vol. 788. in Lecture Notes in Physics, vol. 788. Berlin, Heidelberg: Springer Berlin Heidelberg, 2010. doi: 10.1007/978-3-642-01850-3.
+
+## Appendix
+
+Data analysis functions 
+
+```python
+def average(list):
+    return sum(list)/len(list)
+
+def standarddeviation(list):
+    averageofthelist = average(list)
+    newlist = [ (elementofthelist - averageofthelist)**2 for elementofthelist in list ]
+    sigmasquared  = average(newlist)
+    sigma = sigmasquared**0.5
+    return sigma
+
+def autocorrelation(list, lag):
+    xi = list[:-lag]
+    xiplust = list[lag:]
+    xitimesxiplust = [ i*iplust for (i, iplust) in zip(xi, xiplust) ]
+    averageofxitimexiplust = average(xitimesxiplust)
+    averageofxi = average(xi)
+    averageofxiplust = average(xiplust)
+    autocorrelationvalue = averageofxitimexiplust - (averageofxi*averageofxiplust)
+    return autocorrelationvalue
+
+def integratedautocorrelation(list):
+    selfcorrelation = standarddeviation(list)
+    integratedautocorrelationvalues = [1/2]
+    for lag in range(1, len(list)):
+        normalisedautocorrelation = autocorrelation(list, lag)/selfcorrelation
+        integratedautocorrelationvalues.append(integratedautocorrelationvalues[-1] + normalisedautocorrelation)
+
+    return integratedautocorrelationvalues
+
+def error(list):
+    baseerror = standarddeviation(list)/((len(list))**0.5)
+    integratedautocorrelationvalues = integratedautocorrelation(list)
+    for i in range(1,len(integratedautocorrelationvalues)):
+        if integratedautocorrelationvalues[i-1] > integratedautocorrelationvalues[i]:
+            newerror = ((2*integratedautocorrelationvalues[i])**0.5)*baseerror
+            break
+    else:
+        newerror = ((2*integratedautocorrelationvalues[-1])**0.5)*baseerror
+    
+    return newerror
+```

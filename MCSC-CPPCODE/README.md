@@ -8,6 +8,20 @@ Cloned from https://git.tpi.uni-jena.de/mcsc/mcsc-cppcode.git
 
 The description of the model and the code flow (for the original FORTRAN version by Dr. Masanori Hanada) is in the [PDF file](/MCSC-CPPCODE/Hanada%20-%20BFSS%20code%20manual.pdf)
 
+My contributions to this code are as follows:
+
+
+- Bosonic Energy: [bfssconfig.h  Line 517](/MCSC-CPPCODE/src/bfssconfig.h#L517)
+- Fermionic Energy: [fermionmeasurements.h Line 36](/MCSC-CPPCODE/src/fermionmeasurements.h#L36)
+- Gauge Invariant 4-point correlator (not normalised), $\int dt\left \langle ~\mathrm{Tr}(X^M(t)X^N(t)) ~ \mathrm{Tr}(X^M(t + \Delta t)X^N(t + \Delta t)) ~\right \rangle$: [bfssconfig.h Line 560](/MCSC-CPPCODE/src/bfssconfig.h#L560)
+
+Further, in order to verify the simulation data, and scrutinize possible errors, I have also written the codes for 
+
+- $\int dt \langle \mathrm{Tr}(X^0(t)X^0(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^0(t + \Delta t))\rangle$: [bfssconfig.h Line 597](/MCSC-CPPCODE/src/bfssconfig.h#L597).
+
+- $\int dt \langle \mathrm{Tr}(X^0(t)X^1(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^1(t + \Delta t))\rangle$: [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610).
+
+
 
 
 <!-- # MCSC-CPPCODE
