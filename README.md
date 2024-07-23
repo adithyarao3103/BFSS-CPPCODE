@@ -23,11 +23,12 @@ Therefore the model is the quantum mechanics of $N\times N$ matrices $X$ and $\p
 
 <!-- $$\displaystyle S_{f}=i N\sum_{t}\mathrm{Tr}\bar{\psi}(t)\left(\begin{array}{c c}{{0}}&{{D_{+}}}\\ {{D_{-}}}&{{0}}\end{array}\right)\psi(t)-a N\sum_{t,M}\bar{\psi}(t)\gamma^{M}[X_{M}(t),\psi(t)] $$ -->
 
-## The Project
+## The Code
 The project was to grasp the essence of lattice field theory, build on the C++ implementation of the BFSS model by Dr. Bergner and write and analyze observables in the simulation. The specific observables written by me are:
 
-- Bosonic Energy: [bfssconfig.h](/MCSC-CPPCODE/src/bfssconfig.h) Line 517
-- Fermionic Energy: [fermionmeasurements.h](/MCSC-CPPCODE/src/fermionmeasurements.h) Line 36
-- Gauge Invariant 4-point correlator (not normalised), $\langle X(t_1)X(t_1)X(t_2)X(t_2) \rangle$: [bfssconfig.h](/MCSC-CPPCODE/src/bfssconfig.h) Line 560
+- Bosonic Energy: [bfssconfig.h  Line 517](/MCSC-CPPCODE/src/bfssconfig.h#L517)
+- Fermionic Energy: [fermionmeasurements.h Line 36](/MCSC-CPPCODE/src/fermionmeasurements.h#L36)
+- Gauge Invariant 4-point correlator (not normalised), $\langle X(t_1)X(t_1)X(t_2)X(t_2) \rangle$: [bfssconfig.h Line 560](/MCSC-CPPCODE/src/bfssconfig.h#L560)
 
+## The Data
 
