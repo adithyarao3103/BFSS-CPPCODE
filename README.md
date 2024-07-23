@@ -32,9 +32,9 @@ The project was to grasp the essence of lattice field theory, build on the C++ i
 
 Further, in order to verify the simulation data, and scrutinize possible errors, I have also written the codes for 
 
-- $\int dt \langle \mathrm{Tr}(X^0(t)X^0(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^0(t + \Delta t))\rangle$ : [bfssconfig.h Line 597](/MCSC-CPPCODE/src/bfssconfig.h#L597).
+- $\int dt \langle \mathrm{Tr}(X^0(t)X^0(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^0(t + \Delta t))\rangle$: [bfssconfig.h Line 597](/MCSC-CPPCODE/src/bfssconfig.h#L597).
 
-- $\int dt \langle \mathrm{Tr}(X^0(t)X^1(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^1(t + \Delta t))\rangle$ : [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610).
+- $\int dt \langle \mathrm{Tr}(X^0(t)X^1(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^1(t + \Delta t))\rangle$: [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610).
 
 Further, I also verified the results for the correlators by writing the observables in the FORTRAN code for the same by Dr. Masanori Hanada.
 
@@ -48,7 +48,9 @@ Unfortunately, I have lost access to the simulation data for Bosonic and Fermion
 
 ### [Correlators at Different Temperatures](/DATA_ANALYSIS/CPP/DIFFTEMPS/)
 
-Correlators vs $\Delta t$ for different temperatures, number of lattice sites = 32 and number of colors = 9,
+Correlators vs $\Delta t$ for different temperatures
+
+[Number of lattice sites = 32, Number of Colors = 9]
 
 Temperatures 0.10 - 0.18   |  Temperatures 0.20 - 0.28
 :-------------------------:|:-------------------------:
@@ -69,9 +71,11 @@ We see that the correlator indeed displays the same behavior and the observed be
 
 ### [3 Colors](/DATA_ANALYSIS/CPP/3COLORCORR/) and [6 Colors](/DATA_ANALYSIS/CPP/6COLORCORR/)
 
-To verify that the same effect persists for a lower number of colors too, we considered the case of 6 and 3 colors for temperature 0.10. 
+To verify that the same effect persists for a lower number of colors too, we considered the case of 6 and 3 colors. 
 
-The data obtained for the lattice size of 16 is:
+The data obtained is:
+
+[Number of lattice sites = 16, Temperature = 0.10]
 
 3 Colors   |  6 Colors
 :-------------------------:|:-------------------------:
@@ -82,7 +86,9 @@ The data obtained for the lattice size of 16 is:
 
 Rather than summing over all $X^M$, we consider two cases, considering only $X^0$, and the other case only the mix term between $X^0$ and $X^1$. The corresponding observables are at [bfssconfig.h Line 597](/MCSC-CPPCODE/src/bfssconfig.h#L597) [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610).
 
-The graph obtained (for lattice size of 16 and number of colors 9) is:
+The graph obtained is:
+
+[Number of lattice sites = 16, Temperature = 0.10, Number of colors = 9]
 
 Single   |  Mixed
 :-------------------------:|:-------------------------:
@@ -93,14 +99,19 @@ Single   |  Mixed
 
 We further investigate the case of turning off the commutator term in the action. 
 
-Turning off the commutator in the action gives the results as follows: (T=0.10, 9 colors and 16 lattice sites)
+Turning off the commutator in the action gives the results as follows: 
+
+[Temperature=0.10, Number of colors = 9, Number of lattice sites = 16]
+
 ![](/DATA_ANALYSIS/CPP/NOCOMM/nocomm.png)
 
 We see that turning off the commutator term leads to the anomalous behavior turned off and the correlator displaying the expected exponential decay.
 
 ### [Correlators With The Fermionic Terms in The Action](/DATA_ANALYSIS/FORTRAN/3COLORWITHFERMIONS/)
 
-To look at the behavior of the correlator under the complete action of the BFSS model, we run the same in the FORTRAN code (since at this stage, it is more efficient and fermionic simulations are exponentially more resource-consuming than bosonic simulations) with 3 colors and 16 lattice sites for T=0.1. The results are as follows:
+To look at the behavior of the correlator under the complete action of the BFSS model, we run the same in the FORTRAN code (since at this stage, it is more efficient and fermionic simulations are exponentially more resource-consuming than bosonic simulations). The results are as follows:
+
+[Temperature=0.10, Number of colors = 3, Number of lattice sites = 16]
 
 ![](/DATA_ANALYSIS/FORTRAN/3COLORWITHFERMIONS/fullAction.png)
 
