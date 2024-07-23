@@ -24,9 +24,8 @@ Therefore the model is the quantum mechanics of $N\times N$ matrices $X$ and $\p
 <!-- $$\displaystyle S_{f}=i N\sum_{t}\mathrm{Tr}\bar{\psi}(t)\left(\begin{array}{c c}{{0}}&{{D_{+}}}\\ {{D_{-}}}&{{0}}\end{array}\right)\psi(t)-a N\sum_{t,M}\bar{\psi}(t)\gamma^{M}[X_{M}(t),\psi(t)] $$ -->
 
 ## Project Objectives
+
 The objective of this project was to comprehend the fundamental principles of lattice field theory, extend the C++ implementation of the BFSS model developed by Dr. Bergner, and formulate and analyze observables within the simulation framework. The specific observables I implemented and investigated include:
-
-
 
 - Bosonic Energy: [bfssconfig.h  Line 517](/MCSC-CPPCODE/src/bfssconfig.h#L517)
 - Fermionic Energy: [fermionmeasurements.h Line 36](/MCSC-CPPCODE/src/fermionmeasurements.h#L36)
