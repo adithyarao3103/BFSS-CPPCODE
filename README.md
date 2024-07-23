@@ -32,8 +32,9 @@ The project was to grasp the essence of lattice field theory, build on the C++ i
 
 Further, in order to verify the simulation data, and scrutinize possible errors, I have also written the codes for 
 
-- $\int dt ~\langle~\mathrm{Tr}(X^0(t)X^0(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^0(t + \Delta t))\rangle$ : [bfssconfig.h Line 597](/MCSC-CPPCODE/src/bfssconfig.h#L597).
-- $\int dt ~\langle~\mathrm{Tr}(X^0(t)X^1(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^1(t + \Delta t))\rangle$ : [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610).
+- $\int dt \langle \mathrm{Tr}(X^0(t)X^0(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^0(t + \Delta t))\rangle$ : [bfssconfig.h Line 597](/MCSC-CPPCODE/src/bfssconfig.h#L597).
+
+- $\int dt \langle \mathrm{Tr}(X^0(t)X^1(t))~ \mathrm{Tr}(X^0(t + \Delta t)X^1(t + \Delta t))\rangle$ : [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610).
 
 Further, I also verified the results for the correlators by writing the observables in the FORTRAN code for the same by Dr. Masanori Hanada.
 
