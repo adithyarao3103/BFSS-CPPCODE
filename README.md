@@ -25,11 +25,11 @@ Therefore the model is the quantum mechanics of $N\times N$ matrices $X$ and $\p
 
 ## Project Objectives
 
-The objective of this project was to comprehend the fundamental principles of lattice field theory, extend the C++ implementation of the BFSS model developed by Dr. Bergner, and formulate and analyze observables within the simulation framework. The specific observables I implemented and investigated include:
+The objective of this project was to understand the fundamental principles of lattice field theory, extend the C++ implementation of the BFSS model developed by Dr. Bergner, and formulate and analyze observables within the simulation framework. The specific observables I implemented and investigated include:
 
 - Bosonic Energy: [bfssconfig.h  Line 517](/MCSC-CPPCODE/src/bfssconfig.h#L517)
 - Fermionic Energy: [fermionmeasurements.h Line 36](/MCSC-CPPCODE/src/fermionmeasurements.h#L36)
-- Gauge Invariant 4-point correlator (not normalised), $\int dt\left \langle ~\mathrm{Tr}(X^M(t)X^N(t)) ~ \mathrm{Tr}(X^M(t + \Delta t)X^N(t + \Delta t)) ~\right \rangle$: [bfssconfig.h Line 560](/MCSC-CPPCODE/src/bfssconfig.h#L560)
+- Gauge Invariant 4-point correlator (not normalised), $\int dt\left \langle ~\mathrm{Tr}(X^M(t)X^M(t)) ~ \mathrm{Tr}(X^N(t + \Delta t)X^N(t + \Delta t)) ~\right \rangle$: [bfssconfig.h Line 560](/MCSC-CPPCODE/src/bfssconfig.h#L560)
 
 To validate the simulation data and conduct a thorough examination of potential errors, I have developed supplementary code for
 
@@ -85,7 +85,11 @@ The data obtained is:
 
 ### [Single Matrix Correlator](/DATA_ANALYSIS/CPP/SINGLE) and [Single Mixed Matrix Correlator](/DATA_ANALYSIS/CPP/SINGLEMIXED/)
 
-Rather than summing over all $X^M$, we consider two cases, considering only $X^0$, and the other case only the mix term between $X^0$ and $X^1$. The corresponding observables are at [bfssconfig.h Line 597](/MCSC-CPPCODE/src/bfssconfig.h#L597) [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610).
+Rather than summing over all $X^M$, we consider two cases
+
+- considering only $X^0$, for the correlator
+- considering a case of mixed terms between $X^0$ and $X^1$ to ensure that the behavior persists even in the mixed case.
+<!-- The corresponding observables are at [bfssconfig.h Line 597](/MCSC-CPPCODE/src/bfssconfig.h#L597) [bfssconfig.h Line 610](/MCSC-CPPCODE/src/bfssconfig.h#L610). -->
 
 The graph obtained is:
 
@@ -94,6 +98,8 @@ The graph obtained is:
 Single   |  Mixed
 :-------------------------:|:-------------------------:
 ![](/DATA_ANALYSIS/CPP/SINGLE/single.png)  |  ![](/DATA_ANALYSIS/CPP/SINGLEMIXED/singlemixed.png)
+
+The correlator for the mixed case too, although being negligible in magnitude, displays the same behavior as the correlator for the single case.
 
 
 ### [No Commutator in the Action](/DATA_ANALYSIS/CPP/NOCOMM)
@@ -151,7 +157,7 @@ Some similar studies indicate that such an oscillatory behavior is a sign of the
 
 ## Appendix
 
-Data analysis functions 
+Statistical analysis functions used in the analysis of the correlator:
 
 ```python
 def average(list):

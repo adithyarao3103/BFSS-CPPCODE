@@ -8,7 +8,7 @@ In this folder, you will find the data for the 4-point gauge invariant correlato
 
 The folder 'CPP' contains the data from the C++ code, while the folder 'FORTRAN' contains the data from the FORTRAN code.
 
-The functions to analyze the data are as follows:
+Statistical analysis functions used in the analysis of the correlator:
 
 ```python
 def average(list):
