@@ -11,6 +11,18 @@ where $\gamma^M~(M=1, \cdots, 10)$ are the $16\times16$ upper right block matric
 
 Therefore the model is the quantum mechanics of $N\times N$ matrices $X$ and $\psi$ (where $N$ is the number of colors).
 
+## Lattice Simulations
+
+Lattice formulation is the only known non-perturbative, regularized formalism for Quantum Field Theories. In this, we discretize space-time and form a lattice on which the (finite) path integral is performed.
+
+On a lattice, the gauge fields take up the role of connections between lattice points and, therefore, live on the links between the lattice sites. The action for the gauge fields would be constructed out of plaquette sums as 
+
+$$
+S  \propto \sum _{n}\sum_{\mu<\nu}\mathrm{Re}~ \mathrm{tr}~(\mathbb{I} - U_{\mu\nu}(n)) 
+$$
+
+As a presentation of the lattice field methods, refer to the file [rudimentary_lattsim.cpp](rudimentary_lattsim.cpp), which presents a rudimentary (not optimized) code for simulating $SU(2)$ gauge theory on a 1+1 dimensional lattice. This code is ugly and prone to memory leaks. It is only to display an understanding of the lattice simulations. Please note that I have not implemented any observables so far. The only part that has been implemented so far is the lattice action and the updating of the lattice according to the Markov Chain method.
+
 <!-- On lattice regularization, the model action becomes  -->
 
 <!-- $$ S_M = S_b + S_f $$ -->
