@@ -1,3 +1,9 @@
+// Code written by me for a simple simulation of SU(2) gauge theories on a 1+1 dimensional lattice. 
+// There is a problem with the lattice not thermalizing but oscillating wildly and not reaching the ground state. 
+// The action is reaching values like -9.94465e+012 and, on the other hand, 6.01714e+012. 
+//I will take a deeper look at the problem when I have time!
+
+
 #include <iostream>
 #include <cmath>
 #include <random>
