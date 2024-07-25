@@ -24,7 +24,7 @@ On a lattice, the gauge fields take up the role of connections between lattice p
 
 <!-- $$ S \propto \sum _{n}\sum_{\mu<\nu}\mathrm{Re}~ \mathrm{tr}~(\mathbb{I} - U_{\mu\nu}(n)) $$ -->
 
-$$ S_{M}={N}\int_{0}^{\beta}dt~\mathrm{Tr}\left\lbrace\frac{1}{2}\big(D_{t}X_{M}\big)^{2}-\frac{1}{4}[X_{M},X_{N}]^{2} + i{\bar{\psi}}\gamma^{10}D_{t}\psi\ -{\bar{\psi}}\gamma^{M}[X_{M},\psi]\right\rbrace $$
+$$ S \propto \sum _{n}\sum_{\mu<\nu}\mathrm{Re}~ \mathrm{tr}~(\mathbb{I} - U_{\mu\nu}(n)) $$
 
 As a presentation of the lattice field methods, refer to the file [rudimentary_lattsim.cpp](rudimentary_lattsim.cpp), which presents a rudimentary (not optimized) code for simulating $SU(2)$ gauge theory on a 1+1 dimensional lattice. This code is ugly, inefficient and prone to memory leaks. It is only to display the principles of the lattice simulations. Please note that I have not implemented any observables so far. The only part that has been implemented so far is the lattice action and the updating of the lattice according to the Markov Chain method.
 
