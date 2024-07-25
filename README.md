@@ -19,7 +19,7 @@ The objective of this project was to understand the fundamental principles of la
 
 Lattice formulation is the only known non-perturbative, regularized formalism for Quantum Field Theories. In this, we discretize space-time and form a lattice on which the (finite) path integral is performed.
 
-On a lattice, the gauge fields take up the role of connections between lattice points and, therefore, live on the links between the lattice sites. The action for the gauge fields would be constructed out of plaquette sums as
+On a lattice, the gauge fields take up the role of connections between lattice points and, therefore, live on the links between the lattice sites. The action for the gauge fields would be constructed out of plaquette sums as 
 
 $$ S = \frac{\beta}{N} \sum _{n}\sum_{\mu<\nu}\mathrm{Re}~ \mathrm{tr}~(\mathbb{I} - U_{\mu\nu}(n)) $$
 
