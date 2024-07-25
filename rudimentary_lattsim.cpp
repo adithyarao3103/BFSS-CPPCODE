@@ -1,16 +1,16 @@
-// Code written by me for a simple simulation of SU(2) gauge theories on a 1+1 dimensional lattice. 
-// There is a problem with the lattice not thermalizing but oscillating wildly and not reaching the ground state. 
-// The action is reaching values like -9.94465e+012 and, on the other hand, 6.01714e+012. 
-//I will take a deeper look at the problem when I have time!
-
+// Code written by me to simulate SU(2) pure gauge theory in 1+1 dimensions. 
+// This code is ugly and prone to memory leaks. It is only to display an understanding of the lattice simulations
+// I have not implemented any observables so far. 
+// The only part that has been implemented so far is the lattice action and the updating of the lattice according to the Markov Chain method.
+// Have not used any standard libs in C++ for complex numbers and matrices. Implemented the necessary functionalities from scratch
 
 #include <iostream>
 #include <cmath>
 #include <random>
 
 
-#define nS 4
-#define nT 4
+#define nS 8
+#define nT 8
 #define threshold 0.5
 #define beta 1
 #define N 2
@@ -269,44 +269,38 @@ lattice updateLattice(lattice lat2)
 		int spat = distnS(rng);
 		int direction = distmu(rng);
 
-		// std::cout<< temp << " " << spat << " " << direction << std::endl;
-		// X.print();
-
-		// lat2.lat[temp][spat][direction].print();
-
 		lat2.lat[temp][spat][direction] = X*lat2.lat[temp][spat][direction];
 
-		// lat2.lat[temp][spat][direction].print();
 
 		if (direction == 0){
 			if (temp == nT-1){
-				lat2.lat[0][spat][1] = (X*lat2.lat[temp][spat][direction]).hermitian();
+				lat2.lat[0][spat][1] = (lat2.lat[temp][spat][direction]).hermitian();
 			}
 			else{
-				lat2.lat[temp+1][spat][1] = (X*lat2.lat[temp][spat][direction]).hermitian();
+				lat2.lat[temp+1][spat][1] = (lat2.lat[temp][spat][direction]).hermitian();
 			}
 		}
 		else if (direction == 1){
 			if (temp == 0){
-				lat2.lat[nT-1][spat][0] = (X*lat2.lat[temp][spat][direction]).hermitian();
+				lat2.lat[nT-1][spat][0] = (lat2.lat[temp][spat][direction]).hermitian();
 			}
 			else{
-				lat2.lat[temp-1][spat][0] = (X*lat2.lat[temp][spat][direction]).hermitian();
+				lat2.lat[temp-1][spat][0] = (lat2.lat[temp][spat][direction]).hermitian();
 			}
 		} else if (direction == 2){
 			if (spat == nS-1){
-				lat2.lat[temp][0][3] = (X*lat2.lat[temp][spat][direction]).hermitian();
+				lat2.lat[temp][0][3] = (lat2.lat[temp][spat][direction]).hermitian();
 			}
 			else{
-				lat2.lat[temp][spat+1][3] = (X*lat2.lat[temp][spat][direction]).hermitian();
+				lat2.lat[temp][spat+1][3] = (lat2.lat[temp][spat][direction]).hermitian();
 			}
 		}
 		else if (direction == 3){
 			if (spat == 0){
-				lat2.lat[temp][nS-1][2] = (X*lat2.lat[temp][spat][direction]).hermitian();
+				lat2.lat[temp][nS-1][2] = (lat2.lat[temp][spat][direction]).hermitian();
 			}
 			else{
-				lat2.lat[temp][spat-1][2] = (X*lat2.lat[temp][spat][direction]).hermitian();
+				lat2.lat[temp][spat-1][2] = (lat2.lat[temp][spat][direction]).hermitian();
 			}
 		}
 
@@ -314,15 +308,12 @@ lattice updateLattice(lattice lat2)
 
 		float rndm = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 		float expDeltaS = exp(-(finAction - initAction));
-		// std::cout<<"Random: "<<rndm<<" Final: "<<finAction<<" Initial: "<<initAction<<" Exp: "<<expDeltaS<<std::endl;
 
 		if ( rndm <= expDeltaS)
 		{
-			// std::cout<<"Change"<<std::endl;
 			return lat2;
 		}
 		else {
-			// std::cout<<"No Change"<<std::endl;
 			return origLat;
 		}
 	}
@@ -338,170 +329,10 @@ int main()
 	int i = 0;
 	while (i < 5000) {
 		lat = updateLattice(lat);
-		// std::cout <<i <<" "<< action(lat)<<std::endl;
+		std::cout <<i <<" "<< action(lat)<<std::endl;
 		i++;
 	}
-		std::cout <<i <<" "<< action(lat)<<std::endl;
-
-	// complex c1_[2][2] = {{c_one,2*c_one}, {3*c_one,4*c_one}};
-	// complex c2_[2][2] = {{4*c_one, 5*c_one}, {6*c_one, 10*c_one}};
-
-	// su2 c1(c1_), c2(c2_);
-
-	// (c1*c2).print();
-	
-	
-	// complex onetwo(1,2), twoone(2,1);
-	// complex test_[2][2] = {{c_zero, onetwo}, {twoone, c_zero}};
-	// su2 test(test_);
-	// test.print();
-	// test.hermitian();
-	// test.print();
-
 }
 
-
-
-
-
-//class latticeNode {
-//	su2 U_tp;
-//	su2 U_xp;
-//
-//	latticeNode* xp;
-//	latticeNode* tp;
-//	latticeNode* xm;
-//	latticeNode* tm;
-//};
-//
-//class lattice {
-//private:
-//	latticeNode* origin = new latticeNode();
-//public:
-//	lattice() {
-//		origin->U_tp = identity;
-//		origin->U_xp = identity;
-//
-//		latticeNode* current = origin;
-//		
-//		/*
-//		create a connected lattice like this 
-//
-//		x
-//		o o o 
-//		| | | 
-//		o o o 
-//		| | |
-//		o-o-o t
-//		
-//		*/
-//
-//
-//		for (t = 0; t < nT-1; t++) {
-//
-//			latticeNode* beginningX = current;
-//
-//			for (i = 0; i < nS-1; i++) {
-//				current->xp = new latticeNode();
-//				current->xp->xm = current;
-//				current = current->xp;
-//				current->U_xp = identity;
-//				current->U_tp = identity;
-//			}
-//
-//			current->xp = new latticeNode();
-//			current = current->xp;
-//			current->xp = beginningX;
-//			beginningX->xm = current;
-//			current->U_xp = identity;
-//			current->U_tp = identity;
-//			current = beginningX;
-//
-//
-//			current->tp = new latticeNode();
-//			current->tp->tm = current;
-//			current = current->tp;
-//			current->U_xp = identity;
-//			current->U_tp = identity;
-//
-//		}
-//		ccurrent->tp = new latticeNode();
-//		current->tp->tm = current;
-//		current = current->tp;
-//		origin->tm = current;
-//		current->U_xp = identity;
-//		current->U_tp = identity;
-//
-//
-//		//link the nodes in t direction
-//
-//		latticeNode* xNode = new latticeNode();
-//		latticeNode* tNode = new latticeNode();
-//		latticeNode* tNodePrev = new latticeNode();
-//		latticeNode* tNodeNext = new latticeNode();
-//		latticeNode* xNodePrev = new latticeNode();
-//		latticeNode* xNodeNext = new latticeNode();
-//
-//		tNode = origin;
-//		tNodePrev = tNode->tm;
-//		tNodeNext = tNode->tp;
-//
-//
-//		for (t = 0; t < nT; t++) {
-//
-//
-//			xNode = tNode->xp;
-//			xNodePrev = tNodePrev->xp;
-//			xNodeNext = tNodeNext->xp;
-//
-//			for (i = 0; i < nS; i++) {
-//			
-//				xNode->tm = xNodePrev;
-//				xNode->tp = xNodeNext;
-//				xNodePrev = xNodePrev->xp;
-//				xNode = xNode->xp;
-//				xNodeNext = xNodeNext->xp;
-//
-//			}
-//
-//			tNodePrev = tNode;
-//			tNode = tNodeNext;
-//			tNodeNext = tNodeNext->tp;
-//
-//		}
-//	}
-//
-//	void updateLattice() {
-//		latticeNode* updateNode = origin;
-//		for (i = 0; i < distnS(rng); i++) {
-//			updateNode = updateNode->xp;
-//		}
-//		for (i = 0; i < distnT(rng); i++) {
-//			updateNode = updateNode->tp;
-//		}
-//
-//
-//		float r0 = LO + static_cast <float> (std::rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
-//		float r1 = LO + static_cast <float> (std::rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
-//		float r2 = LO + static_cast <float> (std::rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
-//		float r3 =  LO + static_cast <float> (std::rand()) / (static_cast <float> (RAND_MAX / (HI - LO)));
-//
-//		float r = pow(pow(r1, 2) + pow(r2, 2) + pow(r3, 2), 0.5);
-//
-//		float x0 = (r0 > 0 ? 1 : -1) * 0.8660254038;
-//		float x1 = 0.5 * r1 / r;
-//		float x2 = 0.5 * r2 / r;
-//		float x3 = 0.5 * r3 / r;
-//
-//		su2 X = (identity.scalarMul(x0)).add((sigx.scalarMul(x1)).add((sigy.scalarMul(x2)).add((sigz.scalarMul(x3))));
-//
-//		if (dist4(rng) == 1) {
-//			updateNode->tp = updateNode->tp.leftMul(X);
-//		}
-//
-//	}
-//
-//	
-//};
 
 
