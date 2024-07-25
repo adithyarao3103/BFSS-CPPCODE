@@ -11,7 +11,12 @@ where $\gamma^M~(M=1, \cdots, 10)$ are the $16\times16$ upper right block matric
 
 Therefore the model is the quantum mechanics of $N\times N$ matrices $X$ and $\psi$ (where $N$ is the number of colors).
 
-## Lattice Simulations
+## Project Objectives
+
+
+The objective of this project was to understand the fundamental principles of lattice field theory, extend the C++ implementation of the BFSS model developed by Dr. Bergner, and formulate and analyze observables within the simulation framework. 
+
+### Lattice Simulations
 
 Lattice formulation is the only known non-perturbative, regularized formalism for Quantum Field Theories. In this, we discretize space-time and form a lattice on which the (finite) path integral is performed.
 
@@ -19,7 +24,9 @@ On a lattice, the gauge fields take up the role of connections between lattice p
 
 $$ S \propto \sum _{n}\sum_{\mu<\nu}\mathrm{Re}~ \mathrm{tr}~(\mathbb{I} - U_{\mu\nu}(n)) $$
 
-As a presentation of the lattice field methods, refer to the file [rudimentary_lattsim.cpp](rudimentary_lattsim.cpp), which presents a rudimentary (not optimized) code for simulating $SU(2)$ gauge theory on a 1+1 dimensional lattice. This code is ugly and prone to memory leaks. It is only to display an understanding of the lattice simulations. Please note that I have not implemented any observables so far. The only part that has been implemented so far is the lattice action and the updating of the lattice according to the Markov Chain method.
+As a presentation of the lattice field methods, refer to the file [rudimentary_lattsim.cpp](rudimentary_lattsim.cpp), which presents a rudimentary (not optimized) code for simulating $SU(2)$ gauge theory on a 1+1 dimensional lattice. This code is ugly, inefficient and prone to memory leaks. It is only to display the principles of the lattice simulations. Please note that I have not implemented any observables so far. The only part that has been implemented so far is the lattice action and the updating of the lattice according to the Markov Chain method.
+
+For a more comprehensive introduction to lattice methods, I would point the reader to the book [Quantum Chromodynamics on the Lattice](#ref5)
 
 <!-- On lattice regularization, the model action becomes  -->
 
@@ -33,9 +40,9 @@ As a presentation of the lattice field methods, refer to the file [rudimentary_l
 
 <!-- $$\displaystyle S_{f}=i N\sum_{t}\mathrm{Tr}\bar{\psi}(t)\left(\begin{array}{c c}{{0}}&{{D_{+}}}\\ {{D_{-}}}&{{0}}\end{array}\right)\psi(t)-a N\sum_{t,M}\bar{\psi}(t)\gamma^{M}[X_{M}(t),\psi(t)] $$ -->
 
-## Project Objectives
+### BFSS Observables
 
-The objective of this project was to understand the fundamental principles of lattice field theory, extend the C++ implementation of the BFSS model developed by Dr. Bergner, and formulate and analyze observables within the simulation framework. The specific observables I implemented and investigated include:
+The specific observables I implemented and investigated include:
 
 - Bosonic Energy: [bfssconfig.h  Line 517](/MCSC-CPPCODE/src/bfssconfig.h#L517)
 - Fermionic Energy: [fermionmeasurements.h Line 36](/MCSC-CPPCODE/src/fermionmeasurements.h#L36)
@@ -153,6 +160,8 @@ Some similar studies indicate that such an oscillatory behavior is a sign of the
 [3] M. Hanada, J. Nishimura, Y. Sekino, and T. Yoneya, “Direct test of the gauge-gravity correspondence for Matrix theory correlation functions,” J. High Energ. Phys., vol. 2011, no. 12, p. 20, Dec. 2011, doi: 10.1007/JHEP12(2011)020.
 
 [4] M. Hanada, “What lattice theorists can do for superstring/M-theory,” Int. J. Mod. Phys. A, vol. 31, no. 22, p. 1643006, Aug. 2016, doi: 10.1142/S0217751X16430065.
+
+<a id="ref5"></a>
 
 [5] C. Gattringer and C. B. Lang, Quantum Chromodynamics on the Lattice: An Introductory Presentation, vol. 788. in Lecture Notes in Physics, vol. 788. Berlin, Heidelberg: Springer Berlin Heidelberg, 2010. doi: 10.1007/978-3-642-01850-3.
 

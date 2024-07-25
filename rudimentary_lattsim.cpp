@@ -15,6 +15,8 @@
 #define beta 1
 #define N 2
 
+//  Defining the complex number class
+
 class complex {
 public:
 	float r, i;
@@ -59,6 +61,9 @@ complex operator*(float f, complex c) {
 		out.i = c.i * f;
 		return(out);
 	}
+
+
+// Defining the SU(2) matrix class
 
 class su2 {
 public:
@@ -146,6 +151,8 @@ su2 operator*(float f, su2 u1) {
 		return(out);
 	}
 
+//  Some initializations
+
 complex c_zero((float)0.0, (float)0.0);
 complex c_one((float)1.0, (float)0.0);
 complex c_minus_one((float)-1.0, (float)0.0);
@@ -171,6 +178,7 @@ std::uniform_int_distribution<std::mt19937::result_type> distnS(0, nS-1);
 std::uniform_int_distribution<std::mt19937::result_type> distnT(0, nT - 1);
 std::uniform_int_distribution<std::mt19937::result_type> distmu(0, 3);
 
+//  Defining the lattice class
 
 class lattice {
 public:
@@ -263,15 +271,17 @@ lattice updateLattice(lattice lat2)
 		float x2 = 0.5 * r2 / r;
 		float x3 = 0.5 * r3 / r;
 
-		su2 X = (x0*identity)+(x1*sigx)+(x2*sigy)+(x3*sigz);
+		su2 X = (x0*identity)+(x1*sigx)+(x2*sigy)+(x3*sigz); // Gives a random SU(2) matrix which we will use to generate a new lattice from the given one 
 
 		int temp = distnT(rng);
 		int spat = distnS(rng);
 		int direction = distmu(rng);
 
+		// temp and spat are the spatial and temporal indices of the lattice point which we are going to update and direction is the direction of the update. The update will be done using the SU(2) matrix X.
+
 		lat2.lat[temp][spat][direction] = X*lat2.lat[temp][spat][direction];
 
-
+		//  Each link for a given site is shared with the neighbouring sites. The following code updates those neighbouring sites' links as well, while also incorporating the periodic boundary conditions.
 		if (direction == 0){
 			if (temp == nT-1){
 				lat2.lat[0][spat][1] = (lat2.lat[temp][spat][direction]).hermitian();
@@ -306,10 +316,10 @@ lattice updateLattice(lattice lat2)
 
 		float finAction = action(lat2);
 
-		float rndm = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-		float expDeltaS = exp(-(finAction - initAction));
+		float rndm = static_cast <float> (rand()) / static_cast <float> (RAND_MAX-1);
+		float expDeltaS = exp(-(finAction - initAction)); 
 
-		if ( rndm <= expDeltaS)
+		if ( rndm <= expDeltaS) // This is the markov chain selection criteria. If r <= exp(-\Delta S), where r \in [0,1) is a random number, the new lattice is accepted. Else, the old lattice is returned.
 		{
 			return lat2;
 		}
@@ -320,11 +330,6 @@ lattice updateLattice(lattice lat2)
 
 int main()
 {
-	// complex c1(10, 20);
-	// complex c2(c1);
-	// c2 = complex(1,2);
-	// c2.print();
-	// c1.print();
 	lattice lat;
 	int i = 0;
 	while (i < 5000) {
@@ -332,6 +337,7 @@ int main()
 		std::cout <<i <<" "<< action(lat)<<std::endl;
 		i++;
 	}
+	//  The above code simply thermalises the lattice and prints the action. Any observable to be implemented must be done as a function of the lattice and should be run in a loop here. 
 }
 
 
