@@ -19,23 +19,21 @@
 
 class complex {
 public:
-	float r, i;
+	double r, i;
 	complex() {
 		r = 0.0;
 		i = 0.0;
 	}
-	complex(float real, float imag) {
+	complex(double real, double imag) {
 		r = real;
 		i = imag;
 	}
-
 	complex conjugate() {
 		complex out;
 		out.r = r;
 		out.i = -1 * i;
 		return (out);
 	}
-
 	void print() {
 		std::cout << r << " + i" << i;
 	}
@@ -55,7 +53,7 @@ complex operator+(complex c1, complex c2) {
 		return(c);
 	}
 
-complex operator*(float f, complex c) {
+complex operator*(double f, complex c) {
 		complex out;
 		out.r = c.r * f;
 		out.i = c.i * f;
@@ -68,7 +66,6 @@ complex operator*(float f, complex c) {
 class su2 {
 public:
 	complex u[2][2];
-
 	su2() {
 		for (int row = 0; row < 2; row++) {
 			for (int col = 0; col < 2; col++) {
@@ -83,18 +80,15 @@ public:
 			}
 		}
 	}
-
 	su2 hermitian() {
 		su2 out(*this);
 		out.u[0][1] = u[1][0].conjugate();
 		out.u[1][0] = u[0][1].conjugate();
 		return(out);
 	}
-
 	complex trace() {
 		return (u[0][0]+u[1][1]);
 	}
-
 	void print() {
 		u[0][0].print();
 		std::cout << "\t";
@@ -141,7 +135,7 @@ su2 operator*(su2 u1, su2 u2) {
 		return(out);
 	}
 
-su2 operator*(float f, su2 u1) {
+su2 operator*(double f, su2 u1) {
 		su2 out;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 2; j++) {
@@ -153,10 +147,10 @@ su2 operator*(float f, su2 u1) {
 
 //  Some initializations
 
-complex c_zero((float)0.0, (float)0.0);
-complex c_one((float)1.0, (float)0.0);
-complex c_minus_one((float)-1.0, (float)0.0);
-complex c_i((float)0.0, (float)1.0);
+complex c_zero((double)0.0, (double)0.0);
+complex c_one((double)1.0, (double)0.0);
+complex c_minus_one((double)-1.0, (double)0.0);
+complex c_i((double)0.0, (double)1.0);
 complex c_minus_i = c_i.conjugate();
 
 complex identity_[2][2] = {{c_one, c_zero}, {c_zero, c_one}};
@@ -171,7 +165,7 @@ su2 sigz(sigz_);
 
 std::random_device rd;
 std::mt19937 gen(rd());
-float LO = -0.5, HI = 0.5;
+double LO = -0.5, HI = 0.5;
 std::random_device dev;
 std::mt19937 rng(dev());
 std::uniform_int_distribution<std::mt19937::result_type> distnS(0, nS-1);
@@ -184,8 +178,6 @@ class lattice {
 public:
 	su2*** lat = new su2**[nT];
 	lattice() {
-
-
 		//		 1
 		//	<----------
 		//	|         ^
@@ -193,21 +185,16 @@ public:
 		//	v         |
 		//	---------->
 		//	     0
-
-
 		for (int t = 0; t < nT; t++) {
 			lat[t] = new su2*[nS];
-
 			for (int s = 0; s < nS; s++) {
 				lat[t][s] = new su2[4];
-
 				for (int mu = 0; mu < 4; mu++) {
 					lat[t][s][mu] = identity;
 				}
 			}
 		}		
 	}
-
 	void print() {
 		for (int t = 0; t < nT; t++) {
 			for (int s = 0; s < nS; s++) {
@@ -218,69 +205,41 @@ public:
 			}
 		}
 	}
-
-};
-
-float action(lattice l) {
-
-		float S = 0;
+	double action(){
+		lattice l(*this);
+		double S = 0;
 		complex intermediate;
-
-
 		for (int t = 1; t < nT - 1; t++) {
-
 			for (int s = 1; s < nS - 1; s++) {
-
 				su2 umunu;
-
 				umunu = l.lat[t][s][0]*(l.lat[t + 1][s][2]*(l.lat[t + 1][s + 1][1]*l.lat[t][s + 1][3]));
 				umunu = identity + umunu;
-
 				intermediate = umunu.trace();
-
 				S += intermediate.r;
-
 			}
-
 		}
-
-
 		S = S * beta / N;
-
 		return (S);
-
 	}
-
-lattice updateLattice(lattice lat2)
-	{
-
-		
-		lattice origLat(lat2);
-
-		float initAction = action(lat2);
-
-		float r0 = (float)LO + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (HI - LO)));
-		float r1 = (float)LO + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (HI - LO)));
-		float r2 = (float)LO + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (HI - LO)));
-		float r3 = (float)LO + static_cast<float>(std::rand()) / (static_cast<float>(RAND_MAX / (HI - LO)));
-
-		float r = pow(pow(r1, 2) + pow(r2, 2) + pow(r3, 2), 0.5);
-
-		float x0 = (r0 > 0 ? 1 : -1) * 0.8660254038;
-		float x1 = 0.5 * r1 / r;
-		float x2 = 0.5 * r2 / r;
-		float x3 = 0.5 * r3 / r;
-
-		su2 X = (x0*identity)+(x1*sigx)+(x2*sigy)+(x3*sigz); // Gives a random SU(2) matrix which we will use to generate a new lattice from the given one 
-
+	void MCUpdate(){
+		lattice lat1(*this);
+		lattice lat2(*this);
+		double initAction = lat1.action();
+		double r0 = (double)LO + static_cast<double>(std::rand()) / (static_cast<double>(RAND_MAX / (HI - LO)));
+		double r1 = (double)LO + static_cast<double>(std::rand()) / (static_cast<double>(RAND_MAX / (HI - LO)));
+		double r2 = (double)LO + static_cast<double>(std::rand()) / (static_cast<double>(RAND_MAX / (HI - LO)));
+		double r3 = (double)LO + static_cast<double>(std::rand()) / (static_cast<double>(RAND_MAX / (HI - LO)));
+		double r = pow(pow(r1, 2) + pow(r2, 2) + pow(r3, 2), 0.5);
+		double x0 = (r0 > 0 ? 1 : -1) * 0.8660254038;
+		double x1 = 0.5 * r1 / r;
+		double x2 = 0.5 * r2 / r;
+		double x3 = 0.5 * r3 / r;
+		su2 X = (x0*identity)+(x1*sigx)+(x2*sigy)+(x3*sigz);  // Gives a random SU(2) matrix which we will use to generate a new lattice from the given one 
 		int temp = distnT(rng);
 		int spat = distnS(rng);
 		int direction = distmu(rng);
-
 		// temp and spat are the spatial and temporal indices of the lattice point which we are going to update and direction is the direction of the update. The update will be done using the SU(2) matrix X.
-
 		lat2.lat[temp][spat][direction] = X*lat2.lat[temp][spat][direction];
-
 		//  Each link for a given site is shared with the neighbouring sites. The following code updates those neighbouring sites' links as well, while also incorporating the periodic boundary conditions.
 		if (direction == 0){
 			if (temp == nT-1){
@@ -313,28 +272,30 @@ lattice updateLattice(lattice lat2)
 				lat2.lat[temp][spat-1][2] = (lat2.lat[temp][spat][direction]).hermitian();
 			}
 		}
-
-		float finAction = action(lat2);
-
-		float rndm = static_cast <float> (rand()) / static_cast <float> (RAND_MAX-1);
-		float expDeltaS = exp(-(finAction - initAction)); 
-
+		double finAction = lat2.action();
+		double rndm = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
+		double expDeltaS = exp(-(finAction - initAction));
 		if ( rndm <= expDeltaS) // This is the markov chain selection criteria. If r <= exp(-\Delta S), where r \in [0,1) is a random number, the new lattice is accepted. Else, the old lattice is returned.
 		{
-			return lat2;
-		}
-		else {
-			return origLat;
+			*this = lat2;
 		}
 	}
+};
+
+double Observable(lattice lat) {
+	//  This is the observable function. Any observable to be implemented must be done as a function of the lattice and should be run in a loop here.
+	return (double)0;
+}
+
+
 
 int main()
 {
 	lattice lat;
 	int i = 0;
-	while (i < 5000) {
-		lat = updateLattice(lat);
-		std::cout <<i <<" "<< action(lat)<<std::endl;
+	while (i < 1000) {
+		lat.MCUpdate();
+		std::cout <<"Count: "<<i <<" Action: "<<lat.action()<<" Observable: "<< Observable(lat)<< std::endl;
 		i++;
 	}
 	//  The above code simply thermalises the lattice and prints the action. Any observable to be implemented must be done as a function of the lattice and should be run in a loop here. 
