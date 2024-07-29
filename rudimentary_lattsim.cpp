@@ -17,6 +17,8 @@
 
 //  Defining the complex number class
 
+// Better implementation for all the classes would be to keep the class members private and only define the public functions. But it would take too much work to implement and I am short on time!
+
 class complex {
 public:
 	double r, i;
