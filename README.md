@@ -59,7 +59,7 @@ The complete code is in the folder [MCSC-CPPCODE](/MCSC-CPPCODE/).
 
 ## Results
 
-Due to unforeseen circumstances, the simulation data for Bosonic and Fermionic energies are no longer available. In this section, we present an analysis of the Gauge Invariant 4-point correlator, focusing solely on the Bosonic sector.
+After the initial verification of the code by comparing the behavior of Energy in the model, we proceeded to evaluate the behavior of the 4-point gauge invariant correlator in the purely Bosonic sector of the theory. In this section, we present an analysis of the same.
 
 (The complete data and the jupyter notebooks of the analysis are in the folder [DATA_ANALYSIS](/DATA_ANALYSIS/))
 
@@ -144,7 +144,7 @@ The results are as follows:
 
 In our investigation of the BFSS model, we have observed that the 4-point gauge invariant correlator in the purely Bosonic sector exhibits deviations from the expected exponential decay. This phenomenon is not attributable to any artifacts in the C++ implementation but rather reflects an intrinsic property of the model itself.
 
-Further analysis reveals that when the commutator (interaction) term in the action is nullified, the correlator reverts to the expected exponential decay behavior. This leads us to conclude that within the purely Bosonic sector, the presence of the X-X interaction term is responsible for the observed anomalous behavior.
+Further analysis reveals that when the commutator (interaction) term in the action is turned off, the correlator reverts to the expected exponential decay behavior. This leads us to conclude that within the purely Bosonic sector, the presence of the X-X interaction term is responsible for the observed anomalous behavior.
 
 Interestingly, when considering the complete action inclusive of the Fermionic terms, the correlator demonstrates the expected exponential decay. However, the underlying mechanism by which the Fermionic terms suppress the anomalous behavior remains unclear and requires further investigation.
 
