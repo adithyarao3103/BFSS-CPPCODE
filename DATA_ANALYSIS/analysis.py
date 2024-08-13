@@ -56,12 +56,32 @@ def plotwitherror(xvals, yvals, err, title, filename):
     plt.savefig(filename, dpi=500)
     plt.show()
 
-def read(file):
+def read_16sites(file):
     with open(file, 'r') as f:
         data = f.read()
     
     rows = data.split('\n')[1:-1]
     elements = [row.split(' ')[1:-9] for row in rows]
+    corrs = [[] for e in elements[1]]
+
+    for element in elements:
+        i=0
+        for entry in element:
+            corrs[i].append(float(entry))
+            i+=1
+
+    averages = []
+    for corr in corrs:
+        averages.append(average(corr))
+    
+    return averages
+
+def read_32sites(file):
+    with open(file, 'r') as f:
+        data = f.read()
+    
+    rows = data.split('\n')[1:-1]
+    elements = [row.split(' ')[1:-17] for row in rows]
     corrs = [[] for e in elements[1]]
 
     for element in elements:
