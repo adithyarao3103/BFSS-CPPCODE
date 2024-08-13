@@ -75,3 +75,23 @@ def read(file, sites=16):
         averages.append(average(corr))
     
     return averages
+
+def read_fortran(file):
+    with open(file, 'r') as f:
+        data = f.read()
+    
+    rows = data.split('\n')[32:-1]
+    elements = [row.split()[1:] for row in rows]
+    corrs = [[] for e in elements[1]]
+
+    for element in elements:
+        i=0
+        for entry in element:
+            corrs[i].append(float(entry))
+            i+=1
+
+    averages = []
+    for corr in corrs:
+        averages.append(average(corr))
+    
+    return averages
