@@ -56,7 +56,7 @@ def plotwitherror(xvals, yvals, err, title, filename):
     plt.savefig(filename, dpi=500)
     plt.show()
 
-def read_16sites(file, sites):
+def read(file, sites=16):
     with open(file, 'r') as f:
         data = f.read()
     
