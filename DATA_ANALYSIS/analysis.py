@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 plt.rcParams['text.usetex'] = True
 from scipy.interpolate import make_interp_spline 
+from scipy.optimize import curve_fit
 import numpy as np
 
 
@@ -76,11 +77,14 @@ def read(file, sites=16):
     
     return averages
 
-def read_fortran(file):
+def read_fortran(file, drop=False):
     with open(file, 'r') as f:
         data = f.read()
     
-    rows = data.split('\n')[32:-1]
+    if drop:
+        rows = data.split('\n')[1000:-1]
+    else:
+        rows = data.split('\n')[32:-1]
     elements = [row.split()[1:] for row in rows]
     corrs = [[] for e in elements[1]]
 
@@ -95,3 +99,17 @@ def read_fortran(file):
         averages.append(average(corr))
     
     return averages
+
+def expFun(x, a, b, c):
+    return a*np.exp(-1*b*x) + c*np.ones(len(x))
+
+def plot_expfit(xvals, yvals, err, title, filename):
+    _, ax = plt.subplots()
+    parameters, covariance = curve_fit(expFun, xvals, yvals)
+    xnew = np.linspace(min(xvals), max(xvals), 300) 
+    ynew = expFun(xnew, parameters[0], parameters[1], parameters[2])
+    ax.plot(xnew, ynew, color='blue', linestyle='-.')
+    ax.errorbar(xvals, yvals, yerr=err, fmt='.', color='blue', capsize=2)
+    ax.set_title(title)
+    plt.savefig(filename, dpi=500)
+    plt.show()
