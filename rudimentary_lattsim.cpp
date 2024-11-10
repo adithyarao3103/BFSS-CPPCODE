@@ -13,7 +13,6 @@
 #define nS 8
 #define nT 8
 #define threshold 0.5
-#define beta 1
 #define N 2
 
 //  Defining the complex number class
@@ -173,26 +172,33 @@ std::random_device dev;
 std::mt19937 rng(dev());
 std::uniform_int_distribution<std::mt19937::result_type> distnS(0, nS-1);
 std::uniform_int_distribution<std::mt19937::result_type> distnT(0, nT - 1);
-std::uniform_int_distribution<std::mt19937::result_type> distmu(0, 3);
+std::uniform_int_distribution<std::mt19937::result_type> distmu(0, 1);
 
 //  Defining the lattice class
 
 class lattice {
 public:
 	su2*** lat = new su2**[nT];
-	lattice() {
-		//		 1
-		//	<----------
-		//	|         ^
-		//	| 3       | 2
-		//	v         |
-		//	---------->
-		//	     0
+	double beta;
+	lattice(double beta) {
+		this->beta = beta;
+
+		//  Links unique to each site
+		//	(t, s+1)
+		//	   ^
+		//	   |
+		//	   | 2      
+		//	   |      
+		//	   |		0
+		//	(t, s) ----------> (t+1, s)
+		//  We also use the convention that the directional link connecting (t+1, s) to (t, s) is the hermitial conjugate of the directional link connecting (t, s) to (t+1, s).
+
+
 		for (int t = 0; t < nT; t++) {
 			lat[t] = new su2*[nS];
 			for (int s = 0; s < nS; s++) {
-				lat[t][s] = new su2[4];
-				for (int mu = 0; mu < 4; mu++) {
+				lat[t][s] = new su2[2];
+				for (int mu = 0; mu < 2; mu++) {
 					lat[t][s][mu] = identity;
 				}
 			}
@@ -201,7 +207,7 @@ public:
 	void print() {
 		for (int t = 0; t < nT; t++) {
 			for (int s = 0; s < nS; s++) {
-				for (int mu = 0; mu < 4; mu++) {
+				for (int mu = 0; mu < 2; mu++) {
 					std::cout << t << " " << s << " " << mu << std::endl;
 					lat[t][s][mu].print();
 				}
@@ -212,12 +218,14 @@ public:
 		lattice l(*this);
 		double S = 0;
 		complex intermediate;
-		for (int t = 1; t < nT - 1; t++) {
-			for (int s = 1; s < nS - 1; s++) {
-				su2 umunu;
-				umunu = l.lat[t][s][0]*(l.lat[t + 1][s][2]*(l.lat[t + 1][s + 1][1]*l.lat[t][s + 1][3]));
-				umunu = identity + umunu;
-				intermediate = umunu.trace();
+		for (int t = 0; t < nT; t++) {
+			for (int s = 0; s < nS; s++) {
+				su2 umunu = l.lat[t][s][0];
+				// Below we use periodic boundary conditions in both spatial and temporal directions.
+				if ( t == nT - 1 ) umunu = umunu*l.lat[0][s][1]; else umunu = umunu*l.lat[t + 1][s][1];
+				if ( s == nS - 1 ) umunu = umunu*l.lat[t][0][0].hermitian(); else umunu = umunu*l.lat[t][s + 1][0].hermitian();
+				umunu = umunu*l.lat[t][s][1].hermitian();
+				intermediate = (identity + (-1)*umunu).trace();
 				S += intermediate.r;
 			}
 		}
@@ -241,40 +249,7 @@ public:
 		int temp = distnT(rng);
 		int spat = distnS(rng);
 		int direction = distmu(rng);
-		// temp and spat are the spatial and temporal indices of the lattice point which we are going to update and direction is the direction of the update. The update will be done using the SU(2) matrix X.
 		lat2.lat[temp][spat][direction] = X*lat2.lat[temp][spat][direction];
-		//  Each link for a given site is shared with the neighbouring sites. The following code updates those neighbouring sites' links as well, while also incorporating the periodic boundary conditions.
-		if (direction == 0){
-			if (temp == nT-1){
-				lat2.lat[0][spat][1] = (lat2.lat[temp][spat][direction]).hermitian();
-			}
-			else{
-				lat2.lat[temp+1][spat][1] = (lat2.lat[temp][spat][direction]).hermitian();
-			}
-		}
-		else if (direction == 1){
-			if (temp == 0){
-				lat2.lat[nT-1][spat][0] = (lat2.lat[temp][spat][direction]).hermitian();
-			}
-			else{
-				lat2.lat[temp-1][spat][0] = (lat2.lat[temp][spat][direction]).hermitian();
-			}
-		} else if (direction == 2){
-			if (spat == nS-1){
-				lat2.lat[temp][0][3] = (lat2.lat[temp][spat][direction]).hermitian();
-			}
-			else{
-				lat2.lat[temp][spat+1][3] = (lat2.lat[temp][spat][direction]).hermitian();
-			}
-		}
-		else if (direction == 3){
-			if (spat == 0){
-				lat2.lat[temp][nS-1][2] = (lat2.lat[temp][spat][direction]).hermitian();
-			}
-			else{
-				lat2.lat[temp][spat-1][2] = (lat2.lat[temp][spat][direction]).hermitian();
-			}
-		}
 		double finAction = lat2.action();
 		double rndm = static_cast <double> (rand()) / static_cast <double> (RAND_MAX);
 		double expDeltaS = exp(-(finAction - initAction));
@@ -286,19 +261,20 @@ public:
 };
 
 double Observable(lattice lat) {
-	//  This is the observable function. Any observable to be implemented must be done as a function of the lattice and should be run in a loop here.
-	return (double)0;
+	//  Here we implement the observable on the lattice.
+	return (double)0.0;
 }
-
 
 
 int main()
 {
-	lattice lat;
+	double beta=1;
+	double actions[20];
+	lattice lat(beta);
 	int i = 0;
-	while (i < 1000) {
+	while (i < 10001) {
 		lat.MCUpdate();
-		std::cout <<"Count: "<<i <<" Action: "<<lat.action()<<" Observable: "<< Observable(lat)<< std::endl;
+		if (i % 100 == 0) std::cout <<"Count: "<<i <<" Action: "<<lat.action()<<" Observable: "<< Observable(lat) <<std::endl;
 		i++;
 	}
 	//  The above code simply thermalises the lattice and prints the action. Any observable to be implemented must be done as a function of the lattice and should be run in a loop here. 
